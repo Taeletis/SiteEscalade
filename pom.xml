@@ -64,6 +64,8 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+
+		
 		<!-- To compile JSP files -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -78,6 +80,7 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>

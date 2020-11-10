@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
@@ -11,7 +12,7 @@ import com.escalade.oc.beans.Topo;
 import com.escalade.oc.dao.DaoSite;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
-
+@Service
 public class MetierSiteImpl implements MetierSite {
 	@Autowired
 	private DaoSite daoSite;
@@ -76,7 +77,7 @@ public class MetierSiteImpl implements MetierSite {
 		List<Site> listReturn = null;
 		Site s;
 		try {
-			list = daoSite.findAll();
+			list = listeMetierSite();
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				if (t.getIdTopo() == s.getTopo().getIdTopo()) {
@@ -100,6 +101,46 @@ public class MetierSiteImpl implements MetierSite {
 			}
 		}
 		return cotation;
+	}
+
+	@Override
+	public List<Site> listeMetierSite() {
+		List<Site> list=null;
+		try {
+			list = daoSite.findAll();
+			
+		} catch (Exception e) {
+
+		}
+		return list;
+	}
+	@Override
+	public List<Site> chercherParNomMetierSite(String name) {
+		List<Site> list;
+		List<Site> listReturn = null;
+		Site s ;
+		try {
+			list = listeMetierSite();
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				String nom = s.getNom();
+				if (nom.equalsIgnoreCase(name)) {
+					listReturn.add(s);
+				}
+				
+			}
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				String nom = s.getLieu();
+				if (nom.equalsIgnoreCase(name)) {
+					listReturn.add(s);
+				}
+				
+			}
+		} catch (Exception e) {
+
+		}
+		return listReturn;
 	}
 
 }

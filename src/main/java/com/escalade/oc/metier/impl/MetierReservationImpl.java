@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Reservation;
@@ -11,7 +12,7 @@ import com.escalade.oc.beans.StatutType;
 import com.escalade.oc.beans.Topo;
 import com.escalade.oc.dao.DaoReservation;
 import com.escalade.oc.metier.MetierReservation;
-
+@Service
 public abstract class MetierReservationImpl implements MetierReservation{
 	@Autowired
 	private DaoReservation daoReservation;

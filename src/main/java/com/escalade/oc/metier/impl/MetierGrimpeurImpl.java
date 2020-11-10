@@ -96,5 +96,32 @@ import org.springframework.stereotype.Service;
 			}
 			return list;
 		}
+		
+		@Override
+		public boolean connexionMetierGrimpeur (String email, String mdp) {
+			boolean membre =false;
+			List<Grimpeur> list=listeTousMetierGrimpeur();
+			for (int i=0;i<list.size();i++) {
+				Grimpeur g = list.get(i);
+				System.out.println(g.getEmail()+ email);
+				System.out.println(g.getMdp()+ mdp);
+				if (g.getEmail().equals(email)&& g.getMdp().equals(mdp)) {
+					membre=true;
+				}
+			}
+			return membre;
+		}
 
+		@Override
+		public boolean verifierInscriptionMetierGrimpeur(String email) {
+			boolean existe =false;
+			List<Grimpeur> list=listeTousMetierGrimpeur();
+			for (int i=0;i<list.size();i++) {
+				Grimpeur g = list.get(i);
+				if (g.getEmail().equals(email)) {
+					existe=true;
+				}
+			}
+			return existe;
+		}
 }

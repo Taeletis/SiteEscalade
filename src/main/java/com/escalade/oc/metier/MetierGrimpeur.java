@@ -13,4 +13,6 @@ public interface MetierGrimpeur {
 	public Grimpeur trouverMetierGrimpeur(Long id);
 	public void supprimerMetierGrimpeur(Grimpeur g);
 	public List<Grimpeur> listeTousMetierGrimpeur();
+	public boolean verifierInscriptionMetierGrimpeur(String email);
+	public boolean connexionMetierGrimpeur (String email, String mdp);
 }

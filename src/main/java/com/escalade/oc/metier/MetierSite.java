@@ -13,5 +13,7 @@ public interface MetierSite {
 	public Site trouverMetierSite(Long id);
 	public void supprimerMetierSite(Site s);
 	public List<Site> listeParTopoMetierSite(Topo t);
+	public List<Site> listeMetierSite();
 	public int cotationMetierSite (Site s);
+	public List<Site> chercherParNomMetierSite(String name);
 }

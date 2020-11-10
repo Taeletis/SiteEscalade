@@ -4,13 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Commentaire;
 import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.dao.DaoCommentaire;
 import com.escalade.oc.metier.MetierCommentaire;
-
+@Service
 public class MetierCommentaireImpl implements MetierCommentaire{
 	@Autowired
 	private DaoCommentaire daoCommentaire;

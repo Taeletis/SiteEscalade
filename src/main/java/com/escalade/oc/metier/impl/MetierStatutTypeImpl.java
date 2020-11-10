@@ -3,11 +3,12 @@ package com.escalade.oc.metier.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.StatutType;
 import com.escalade.oc.dao.DaoStatutType;
 import com.escalade.oc.metier.MetierStatutType;
-
+@Service
 public class MetierStatutTypeImpl implements MetierStatutType{
 	@Autowired
 	private DaoStatutType daoStatutType;

@@ -3,15 +3,15 @@ package com.escalade.oc.metier.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoSecteur;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierVoie;
-
+@Service
 public class MetierSecteurImpl implements MetierSecteur {
 	@Autowired
 	private DaoSecteur daoSecteur;
@@ -20,9 +20,8 @@ public class MetierSecteurImpl implements MetierSecteur {
 	private MetierVoie metierVoie;
 
 	@Override
-	public Secteur ajouterMetierSecteur(String nom, String lienCarte, String acces, String description, Site s,
-			Grimpeur createur) {
-		Secteur secteur = new Secteur(nom, lienCarte, acces, description, s, createur);
+	public Secteur ajouterMetierSecteur(String nom, String lienCarte, String acces, String description, Site s) {
+		Secteur secteur = new Secteur(nom, lienCarte, acces, description, s);
 		try {
 			secteur = daoSecteur.save(secteur);
 		} catch (Exception e) {
@@ -31,13 +30,11 @@ public class MetierSecteurImpl implements MetierSecteur {
 	}
 
 	@Override
-	public Secteur modifierMetierSecteur(String nom, String lienCarte, String acces, String description,
-			Grimpeur modificateur, Secteur secteur) {
+	public Secteur modifierMetierSecteur(String nom, String lienCarte, String acces, String description, Secteur secteur) {
 		secteur.setNom(nom);
 		secteur.setLienCarte(lienCarte);
 		secteur.setAcces(acces);
 		secteur.setDescription(description);
-		secteur.setCreateur(modificateur);
 		try {
 			secteur = daoSecteur.save(secteur);
 		} catch (Exception e) {

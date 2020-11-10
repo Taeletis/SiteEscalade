@@ -25,7 +25,16 @@ public class Site implements Serializable {
 	private String nom;
 	private String lienImage;
 	private String lieu;
+	
 	private boolean mention;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_GRIMPEUR")
+	private Grimpeur proprietaire;
+	@ManyToOne
+	@JoinColumn(name = "ID_MODIFICATEUR")
+	private Grimpeur modifieur;
+
 	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
 	private Collection<Secteur> secteurs;
 
@@ -112,5 +121,16 @@ public class Site implements Serializable {
 	public void setCommentaires(Collection<Commentaire> commentaires) {
 		this.commentaires = commentaires;
 	}
-
+	public Grimpeur getProprietaire() {
+		return proprietaire;
+	}
+	public void setProprietaire(Grimpeur proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+	public Grimpeur getModifieur() {
+		return modifieur;
+	}
+	public void setModifieur(Grimpeur modifieur) {
+		this.modifieur = modifieur;
+	}
 }

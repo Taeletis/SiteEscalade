@@ -3,12 +3,13 @@ package com.escalade.oc.metier.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Longueur;
 import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoLongueur;
 import com.escalade.oc.metier.MetierLongueur;
-
+@Service
 public class MetierLongueurImpl implements MetierLongueur {
 
 	@Autowired

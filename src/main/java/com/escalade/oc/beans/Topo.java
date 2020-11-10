@@ -38,8 +38,8 @@ public class Topo implements Serializable {
 	private boolean disponible;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_PROPRIO")
-	private Grimpeur proprietaire;
+	@JoinColumn(name = "ID_CREATEUR")
+	private Grimpeur createur;
 	@OneToMany(mappedBy = "topo", fetch = FetchType.LAZY)
 	private Collection<Reservation> reservations;
 	@OneToMany(mappedBy = "topo", fetch = FetchType.LAZY)
@@ -55,7 +55,7 @@ public class Topo implements Serializable {
 		this.description=description;
 		this.dateParution = dateParutrion;
 		this.disponible = disponible;
-		this.proprietaire = proprietaire;
+		this.createur = proprietaire;
 	}
 	public Long getIdTopo() {
 		return idTopo;
@@ -81,11 +81,11 @@ public class Topo implements Serializable {
 	public void setDisponible(boolean disponible) {
 		this.disponible = disponible;
 	}
-	public Grimpeur getProprietaire() {
-		return proprietaire;
+	public Grimpeur getCreateur() {
+		return createur;
 	}
-	public void setProprietaire(Grimpeur proprietaire) {
-		this.proprietaire = proprietaire;
+	public void setCreateur(Grimpeur createur) {
+		this.createur = createur;
 	}
 	public Collection<Reservation> getReservations() {
 		return reservations;

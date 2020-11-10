@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Longueur;
 import com.escalade.oc.beans.Secteur;
@@ -11,7 +12,7 @@ import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoVoie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierVoie;
-
+@Service
 public class MetierVoieImpl implements MetierVoie{
 
 	@Autowired

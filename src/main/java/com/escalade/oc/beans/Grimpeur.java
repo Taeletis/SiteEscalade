@@ -9,11 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 @Entity
-@Table(name="Grimpeur")
 public class Grimpeur implements Serializable {
 	/**
 	 * 
@@ -29,12 +27,12 @@ public class Grimpeur implements Serializable {
 	private boolean membre;
 	@OneToMany(mappedBy = "emprunteur", fetch = FetchType.LAZY)
 	private Collection<Reservation> reservations;
-	@OneToMany(mappedBy = "proprietaire", fetch = FetchType.LAZY)
-	private Collection<Topo> topos;
 	@OneToMany(mappedBy = "createur", fetch = FetchType.LAZY)
-	private Collection<Secteur> secteurs;
+	private Collection<Topo> topos;
+	@OneToMany(mappedBy = "proprietaire", fetch = FetchType.LAZY)
+	private Collection<Site> sites;
 	@OneToMany(mappedBy = "modifieur", fetch = FetchType.LAZY)
-	private Collection<Secteur> secteursModif;
+	private Collection<Site> sitesModif;
 	@OneToMany(mappedBy = "auteur", fetch = FetchType.LAZY)
 	private Collection<Commentaire> commentaires;
 
@@ -100,14 +98,6 @@ public class Grimpeur implements Serializable {
 		this.topos = topos;
 	}
 
-	public Collection<Secteur> getSecteurs() {
-		return secteurs;
-	}
-
-	public void setSecteurs(Collection<Secteur> secteurs) {
-		this.secteurs = secteurs;
-	}
-
 	public Collection<Commentaire> getCommentaires() {
 		return commentaires;
 	}
@@ -116,12 +106,12 @@ public class Grimpeur implements Serializable {
 		this.commentaires = commentaires;
 	}
 
-	public Collection<Secteur> getSecteursModif() {
-		return secteursModif;
+	public Collection<Site> getSecteursModif() {
+		return sitesModif;
 	}
 
-	public void setSecteursModif(Collection<Secteur> secteursModif) {
-		this.secteursModif = secteursModif;
+	public void setSecteursModif(Collection<Site> sitesModif) {
+		this.sitesModif = sitesModif;
 	}
 
 	public void setMembre(boolean membre) {
@@ -138,5 +128,13 @@ public class Grimpeur implements Serializable {
 
 	public boolean isMembre() {
 		return membre;
+	}
+
+	public Collection<Site> getSites() {
+		return sites;
+	}
+
+	public void setSites(Collection<Site> sites) {
+		this.sites = sites;
 	}
 }
