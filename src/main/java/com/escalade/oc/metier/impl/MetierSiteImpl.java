@@ -1,5 +1,6 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -116,11 +117,11 @@ public class MetierSiteImpl implements MetierSite {
 	}
 	@Override
 	public List<Site> chercherParNomMetierSite(String name) {
-		List<Site> list;
-		List<Site> listReturn = null;
+		List<Site> list= new ArrayList<Site>();
+		List<Site> listReturn = new ArrayList<Site>();
 		Site s ;
 		try {
-			list = listeMetierSite();
+			list.addAll(listeMetierSite());
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				String nom = s.getNom();
@@ -129,18 +130,42 @@ public class MetierSiteImpl implements MetierSite {
 				}
 				
 			}
-			for (int i = 0; i < list.size(); i++) {
-				s = list.get(i);
-				String nom = s.getLieu();
-				if (nom.equalsIgnoreCase(name)) {
-					listReturn.add(s);
-				}
-				
-			}
+			/*
+			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
+			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
+			 * 
+			 * }
+			 */
 		} catch (Exception e) {
 
 		}
 		return listReturn;
 	}
 
+	@Override
+	public List<Site> chercherParLieuMetierSite(String endroit) {
+		List<Site> list= new ArrayList<Site>();
+		List<Site> listReturn = new ArrayList<Site>();
+		Site s ;
+		try {
+			list.addAll(listeMetierSite());
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				String lieu = s.getLieu();
+				if (lieu.equalsIgnoreCase(endroit)) {
+					listReturn.add(s);
+				}
+				
+			}
+			/*
+			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
+			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
+			 * 
+			 * }
+			 */
+		} catch (Exception e) {
+
+		}
+		return listReturn;
+	}
 }

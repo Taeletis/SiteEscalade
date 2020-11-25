@@ -55,7 +55,7 @@ public class ConnexionServlet extends HttpServlet {
 
 			if (metierGrimpeur.connexionMetierGrimpeur(email, motDePasse)) {
 
-				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Acceuil.jsp").forward(request, response);
+				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Liste.jsp").forward(request, response);
 			} else {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request, response);
 			}

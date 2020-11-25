@@ -7,19 +7,21 @@
 <meta charset="UTF-8">
 <title>recherche avancé</title>
 </head>
+
 <body>
-<body>
+page de recherche
+<button onclick="window.location.href = '/recherche';">Afficher les sites</button>
 	<div>
 		<table>
 		<tr>
 		<form method="post" action="recherche">
 	
             
-				<th><label for="nom">nom <span class="requis"></label>
+				<th><label for="nom">nom </label>
                 <input type="text" id="nom" name="nom" value="" size="20" maxlength="60" />
                	</th>
 				<th>
-                <label for="lieu">lieu <span class="requis"></label>
+                <label for="lieu">lieu </label>
                 <input type="text" id="lieu" name="lieu" value="" size="20" maxlength="20" />
  				</th>
          		<th>
@@ -38,7 +40,7 @@
 				<th>lieu</th>
 				<th>lienImage</th>
 			</tr>
-			<c:forEach items="${liste}" var="s">
+			<c:forEach items="${sites}" var="s">
 				<tr>
 				
 					<td>${s.nom}</td>
@@ -52,6 +54,5 @@
 
 	</div>
 
-</body>
 </body>
 </html>
