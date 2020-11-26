@@ -15,8 +15,7 @@ page de recherche
 		<table>
 		<tr>
 		<form method="post" action="recherche">
-	
-            
+
 				<th><label for="nom">nom </label>
                 <input type="text" id="nom" name="nom" value="" size="20" maxlength="60" />
                	</th>
@@ -43,7 +42,7 @@ page de recherche
 			<c:forEach items="${sites}" var="s">
 				<tr>
 				
-					<td>${s.nom}</td>
+					<td><a href="/site?id=${s.idSite}">${s.nom} </a></td>
 					<td>${s.lieu}</td>
 					<td><img src="${s.lienImage}"></td>
 				</tr>
