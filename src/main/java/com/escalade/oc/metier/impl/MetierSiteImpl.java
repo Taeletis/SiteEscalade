@@ -56,10 +56,26 @@ public class MetierSiteImpl implements MetierSite {
 
 	@Override
 	public Site trouverMetierSite(Long id) {
-		Site s = null;
+		List<Site> list= new ArrayList<Site>();
+		Site s=null ;
 		try {
-			s = daoSite.getOne(id);
+			list.addAll(listeMetierSite());
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				Long idSite = s.getIdSite();
+				if (idSite==id) {
+				break;	
+				}
+				
+			}
+			/*
+			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
+			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
+			 * 
+			 * }
+			 */
 		} catch (Exception e) {
+
 		}
 		return s;
 	}

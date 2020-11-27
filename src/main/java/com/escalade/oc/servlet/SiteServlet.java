@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,14 +42,16 @@ public class SiteServlet extends HttpServlet {
 		 	String id= request.getParameter("id");
 		 	Long siteId= Long.parseLong(id);
 		 	System.out.println(siteId);
+		 	HttpSession session = request.getSession();
+		 	try {
 		 	Site site=metierSite.trouverMetierSite(siteId);
-		 	System.out.println(site.getNom());
-		 	//request.setAttribute("nom",site.getNom());
-		 	//request.setAttribute("lieu",s.getLieu());
-		 	//request.setAttribute("lienImage",s.getLienImage());
-			//request.setAttribute("secteur",metierSecteur.listeParSiteMetierSecteur(s));
+		 	request.setAttribute("nom",site.getNom());
+		 	request.setAttribute("lieu",site.getLieu());
+		 	request.setAttribute("lienImage",site.getLienImage());
+			request.setAttribute("secteur",metierSecteur.listeParSiteMetierSecteur(site));
 		
-		
+		 	}
+		 	catch (Exception e){}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Site.jsp").forward(request, response);
 	}
