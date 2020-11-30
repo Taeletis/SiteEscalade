@@ -1,7 +1,7 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,8 +12,9 @@ import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoVoie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierVoie;
+
 @Service
-public class MetierVoieImpl implements MetierVoie{
+public class MetierVoieImpl implements MetierVoie {
 
 	@Autowired
 	private DaoVoie daoVoie;
@@ -22,8 +23,8 @@ public class MetierVoieImpl implements MetierVoie{
 
 	@Override
 	public Voie ajouterMetierVoie(String nom, String lienPhoto, String annotation, Secteur s) {
-		Voie v =new Voie(nom,lienPhoto,annotation,s);
-		
+		Voie v = new Voie(nom, lienPhoto, annotation, s);
+
 		try {
 			v = daoVoie.save(v);
 		} catch (Exception e) {
@@ -36,7 +37,7 @@ public class MetierVoieImpl implements MetierVoie{
 		v.setNom(nom);
 		v.setLienPhoto(lienPhoto);
 		v.setAnnotation(annotation);
-		
+
 		try {
 			v = daoVoie.save(v);
 		} catch (Exception e) {
@@ -65,7 +66,7 @@ public class MetierVoieImpl implements MetierVoie{
 	@Override
 	public List<Voie> listeParSecteurMetierVoie(Secteur s) {
 		List<Voie> list;
-		List<Voie> listReturn = null;
+		List<Voie> listReturn = new ArrayList<Voie>();
 		Voie v ;
 		try {
 			list = daoVoie.findAll();
@@ -82,15 +83,30 @@ public class MetierVoieImpl implements MetierVoie{
 	}
 
 	@Override
-	public int cotationMetierVoie(Voie v) {
-		List<Longueur>list =metierLongueur.listeParVoieMetierLongueur(v);
-		int cotation=0;
+	public String cotationMetierVoie(Voie v) {
+		List<Longueur> list = metierLongueur.listeParVoieMetierLongueur(v);
+		String cotation = "";
+		int valeur;
+		int valeurHaute = 0;
+		String niveau = "A";
 		for (int i = 0; i < list.size(); i++) {
-			Longueur l=list.get(i);
-		if (cotation< l.getCotation()) {
-			cotation=l.getCotation();
-}	
-		}	
+			Longueur l = list.get(i);
+			valeur = Integer.parseInt(l.getCotation());
+			if (valeurHaute < valeur) {
+				String s = l.getCotation().substring(1);
+				valeurHaute=valeur;
+				cotation=valeurHaute+s;
+			}
+			if (valeurHaute == valeur) {
+				String s = l.getCotation().substring(1);
+				if(!niveau.equals(s)) {
+					if(s.equals("B")&&niveau.equals("A")||s.equals("C")&&niveau.equals("A")||s.equals("C")&&niveau.equals("B")) {
+						cotation=valeurHaute+s;
+					}
+				}
+			}
+			
+		}
 		return cotation;
 	}
 }

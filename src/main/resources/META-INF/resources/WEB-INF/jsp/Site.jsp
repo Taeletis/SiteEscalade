@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +9,15 @@
 </head>
 
 <body>
+Bienvenu ${grimpeur.nom}
+</br>
+</br>
+</br>
+</br>
 <button onclick="window.location.href = '/recherche';">Afficher les sites</button>
 </br>
 </br>
+<div>
 		<table>
 		
 		<tr>
@@ -19,23 +26,24 @@
 				<th><img src="${lienImage}"></th>
 				
 			</tr>
-		</br>
-		</br>
-		
+	</table>
+	<table>
 			<tr>
-				<th>Nom</th>
+				<th>Nom  des secteurs</th>
 				<th>carte</th>
 				<th>description</th>
 			</tr>
-			<c:forEach items="${secteur}" var="s">
+			<c:forEach items="${secteurs}" var="s">
 				<tr>
-					<td><a href="/site?secteur=${s.idSecteur}">${s.nom}</a></td>
-					<td>${s.lienCarte}</td>
-					<td><img src="${s.description}"></td>
+					<td><a href="/secteur?id=${s.idSecteur}">${s.nom}</td>
+					<td><img src="${s.lienCarte}"></td>
+					<td>${s.description}</td>
 				
 				</tr>
 			</c:forEach>
+			
 		</table>
 		</div>
+		
 </body>
 </html>

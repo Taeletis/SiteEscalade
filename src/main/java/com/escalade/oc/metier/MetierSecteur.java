@@ -14,5 +14,5 @@ public interface MetierSecteur {
 	public Secteur trouverMetierSecteur(Long id);
 	public void supprimerMetierSecteur(Secteur secteur);
 	public List<Secteur> listeParSiteMetierSecteur(Site s);
-	public int cotationMetierSecteur (Secteur s);
+	public String cotationMetierSecteur (Secteur s);
 }

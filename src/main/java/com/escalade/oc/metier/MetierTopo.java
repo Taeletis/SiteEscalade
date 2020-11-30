@@ -13,6 +13,4 @@ public interface MetierTopo {
 	public void supprimerMetierTopo(Topo t);
 	public List<Topo> chercherParNomMetierTopo(String name);
 	public List<Topo> listeTousMetierTopo();
-	public int cotationMetierTopo (Topo t);
-	public List<Topo> chercherParCotationMetierTopo(int cotation);
 }

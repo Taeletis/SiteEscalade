@@ -9,8 +9,15 @@
 </head>
 
 <body>
-page de recherche
+Bienvenu ${grimpeur.nom}
+</br>
+</br>
+
+</br>
+</br>
 <button onclick="window.location.href = '/recherche';">Afficher les sites</button>
+</br>
+</br>
 	<div>
 		<table>
 		<tr>

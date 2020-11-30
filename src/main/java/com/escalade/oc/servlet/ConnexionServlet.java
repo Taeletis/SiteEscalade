@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.metier.MetierGrimpeur;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -55,7 +57,11 @@ public class ConnexionServlet extends HttpServlet {
 
 			if (metierGrimpeur.connexionMetierGrimpeur(email, motDePasse)) {
 
-				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Liste.jsp").forward(request, response);
+				HttpSession session = request.getSession();
+				Grimpeur g =metierGrimpeur.trouverParEmailMetierGrimpeur(email);
+				session.setAttribute("grimpeur",g);
+				
+				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Acceuil.jsp").forward(request, response);
 			} else {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request, response);
 			}

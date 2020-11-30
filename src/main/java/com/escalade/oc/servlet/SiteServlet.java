@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.escalade.oc.beans.Grimpeur;
+import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
@@ -39,16 +41,24 @@ public class SiteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 	String id= request.getParameter("id");
-		 	Long siteId= Long.parseLong(id);
-		 	System.out.println(siteId);
+		try {
 		 	HttpSession session = request.getSession();
+		 	
+		 	}
+			catch(Exception e) {
+				
+			}
 		 	try {
+		 		String id= request.getParameter("id");
+			 	Long siteId= Long.parseLong(id);
+			 	
 		 	Site site=metierSite.trouverMetierSite(siteId);
 		 	request.setAttribute("nom",site.getNom());
 		 	request.setAttribute("lieu",site.getLieu());
 		 	request.setAttribute("lienImage",site.getLienImage());
-			request.setAttribute("secteur",metierSecteur.listeParSiteMetierSecteur(site));
+		 	List<Secteur> l= new ArrayList <Secteur>();
+		 	l.addAll(metierSecteur.listeParSiteMetierSecteur(site));
+			request.setAttribute("secteurs",l); 
 		
 		 	}
 		 	catch (Exception e){}
@@ -63,24 +73,7 @@ public class SiteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String nom = request.getParameter("nom");
-		String lieu = request.getParameter("lieu");
-
-		try {
-			List<Site> l= new ArrayList <Site>();
 		
-			l.addAll(metierSite.chercherParNomMetierSite(nom));
-			
-			l.addAll(metierSite.chercherParLieuMetierSite(lieu));
-			request.setAttribute("sites", l);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
-			
-			System.out.println("recherche");
-
-		} catch (Exception e) {
-			System.out.println("truc");
-			e.printStackTrace();
-		}
 
 	}
 }

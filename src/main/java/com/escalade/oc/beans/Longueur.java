@@ -19,7 +19,7 @@ public class Longueur implements Serializable {
 	@GeneratedValue
 	private long idLongueur;
 	private double hauteur;
-	private int cotation;
+	private String cotation;
 	private String annotation;
 
 	@ManyToOne
@@ -30,7 +30,7 @@ public class Longueur implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Longueur(double hauteur, int cotation,String annotation, Voie voie) {
+	public Longueur(double hauteur, String cotation,String annotation, Voie voie) {
 		super();
 		this.hauteur = hauteur;
 		this.cotation = cotation;
@@ -46,11 +46,11 @@ public class Longueur implements Serializable {
 		this.hauteur = hauteur;
 	}
 
-	public int getCotation() {
+	public String getCotation() {
 		return cotation;
 	}
 
-	public void setCotation(int cotation) {
+	public void setCotation(String cotation) {
 		this.cotation = cotation;
 	}
 

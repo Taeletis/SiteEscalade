@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierSite;
 
@@ -37,9 +39,22 @@ public class RechercheServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 if (!request.getParameterMap().containsKey("sites")) {
-			request.setAttribute("sites",metierSite.listeMetierSite());
-		}
+				request.setAttribute("sites",metierSite.listeMetierSite());
+				
+			}
+		try {
+		HttpSession session = request.getSession();
 		
+		Grimpeur g=(Grimpeur)session.getAttribute("grimpeur");
+		System.out.println(g.getNom());
+		
+		request.setAttribute("utilisateur",g.getNom());
+		
+		
+		
+		}catch (Exception e) {
+			
+		}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
 	}

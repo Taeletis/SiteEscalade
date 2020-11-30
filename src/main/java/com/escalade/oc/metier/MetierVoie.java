@@ -11,6 +11,6 @@ public interface MetierVoie {
 	public Voie trouverMetierVoie(Long id);
 	public void supprimerMetierVoie(Voie v);
 	public List<Voie> listeParSecteurMetierVoie(Secteur s);
-	public int cotationMetierVoie (Voie v);
+	public String cotationMetierVoie (Voie v);
 
 }

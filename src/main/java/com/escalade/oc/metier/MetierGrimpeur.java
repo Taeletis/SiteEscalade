@@ -15,4 +15,5 @@ public interface MetierGrimpeur {
 	public List<Grimpeur> listeTousMetierGrimpeur();
 	public boolean verifierInscriptionMetierGrimpeur(String email);
 	public boolean connexionMetierGrimpeur (String email, String mdp);
+	public Grimpeur trouverParEmailMetierGrimpeur(String email);
 }

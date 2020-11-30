@@ -124,4 +124,17 @@ import org.springframework.stereotype.Service;
 			}
 			return existe;
 		}
+
+		@Override
+		public Grimpeur trouverParEmailMetierGrimpeur(String email) {
+			List<Grimpeur> list=listeTousMetierGrimpeur();
+			Grimpeur g =null;
+			for (int i=0;i<list.size();i++) {
+				 g = list.get(i);
+				if (g.getEmail().equals(email)) {
+					break;
+				}
+			}
+			return g;
+		}
 }

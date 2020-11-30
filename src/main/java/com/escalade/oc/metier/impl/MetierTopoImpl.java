@@ -104,36 +104,5 @@ public class MetierTopoImpl implements  MetierTopo {
 		return list;
 	}
 
-	@Override
-	public int cotationMetierTopo(Topo t) {
-		List<Site> list = metierSite.listeParTopoMetierSite(t);
-		int cotation = 0;
-		for (int i = 0; i < list.size(); i++) {
-			Site s = list.get(i);
-			if (cotation < metierSite.cotationMetierSite(s)) {
-				cotation = metierSite.cotationMetierSite(s);
-			}
-		}
-		return cotation;
-	}
 
-	@Override
-	public List<Topo> chercherParCotationMetierTopo(int cotation) {
-		List<Topo> list;
-		List<Topo> listReturn = null;
-		Topo t ;
-		try {
-			list = listeTousMetierTopo();
-			for (int i = 0; i < list.size(); i++) {
-				t = list.get(i);
-				int c = cotationMetierTopo(t);
-				if (c ==cotation) {
-					listReturn.add(t);
-				}
-			}
-		} catch (Exception e) {
-
-		}
-		return listReturn;
-	}
 }

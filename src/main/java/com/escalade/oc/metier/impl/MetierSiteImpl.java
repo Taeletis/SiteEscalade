@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.Topo;
+import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoSite;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
@@ -108,14 +109,31 @@ public class MetierSiteImpl implements MetierSite {
 	}
 
 	@Override
-	public int cotationMetierSite(Site s) {
+	public String cotationMetierSite(Site s) {
 		List<Secteur> list = metierSecteur.listeParSiteMetierSecteur(s);
-		int cotation = 0;
+		String cotation = "";
+		int valeur;
+		int valeurHaute = 0;
+		String niveau = "A";
 		for (int i = 0; i < list.size(); i++) {
 			Secteur secteur = list.get(i);
-			if (cotation < metierSecteur.cotationMetierSecteur(secteur)) {
-				cotation = metierSecteur.cotationMetierSecteur(secteur);
+			String cotationVoie = metierSecteur.cotationMetierSecteur(secteur);
+			valeur = Integer.parseInt(cotationVoie);
+			if (valeurHaute < valeur) {
+				String lettre = cotationVoie.substring(1);
+				valeurHaute = valeur;
+				cotation = valeurHaute + lettre;
 			}
+			if (valeurHaute == valeur) {
+				String lettre = cotationVoie.substring(1);
+				if (!niveau.equals(lettre)) {
+					if (lettre.equals("B") && niveau.equals("A") || lettre.equals("C") && niveau.equals("A")
+							|| lettre.equals("C") && niveau.equals("B")) {
+						cotation = valeurHaute + lettre;
+					}
+				}
+			}
+
 		}
 		return cotation;
 	}

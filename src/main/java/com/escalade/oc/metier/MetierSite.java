@@ -14,7 +14,7 @@ public interface MetierSite {
 	public void supprimerMetierSite(Site s);
 	public List<Site> listeParTopoMetierSite(Topo t);
 	public List<Site> listeMetierSite();
-	public int cotationMetierSite (Site s);
+	public String cotationMetierSite (Site s);
 	public List<Site> chercherParNomMetierSite(String name);
 	public List<Site> chercherParLieuMetierSite(String endroit);
 }

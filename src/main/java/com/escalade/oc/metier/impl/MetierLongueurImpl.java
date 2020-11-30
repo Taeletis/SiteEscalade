@@ -1,5 +1,6 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class MetierLongueurImpl implements MetierLongueur {
 	private DaoLongueur daoLongueur;
 
 	@Override
-	public Longueur ajouterMetierLongueur(double hauteur, int cotation, String annotation, Voie v) {
+	public Longueur ajouterMetierLongueur(double hauteur, String cotation, String annotation, Voie v) {
 		Longueur l = new Longueur(hauteur, cotation, annotation, v);
 
 		try {
@@ -27,7 +28,7 @@ public class MetierLongueurImpl implements MetierLongueur {
 	}
 
 	@Override
-	public Longueur modifierMetierLongueur(double hauteur, int cotation, String annotation, Longueur l) {
+	public Longueur modifierMetierLongueur(double hauteur, String cotation, String annotation, Longueur l) {
 		l.setHauteur(hauteur);
 		l.setCotation(cotation);
 		l.setAnnotation(annotation);
@@ -61,7 +62,7 @@ public class MetierLongueurImpl implements MetierLongueur {
 	@Override
 	public List<Longueur> listeParVoieMetierLongueur(Voie v) {
 		List<Longueur> list;
-		List<Longueur> listReturn = null;
+		List<Longueur> listReturn = new ArrayList<Longueur>();;
 		Longueur l;
 		try {
 			list = daoLongueur.findAll();
