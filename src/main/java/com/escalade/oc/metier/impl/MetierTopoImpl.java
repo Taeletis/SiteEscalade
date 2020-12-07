@@ -1,5 +1,6 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,19 +11,17 @@ import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.Topo;
 import com.escalade.oc.dao.DaoTopo;
-import com.escalade.oc.metier.MetierSite;
 import com.escalade.oc.metier.MetierTopo;
 @Service
 public class MetierTopoImpl implements  MetierTopo {
 	@Autowired
 	private DaoTopo daoTopo;
 
-	@Autowired
-	private MetierSite metierSite;
 	@Override
-	public Topo ajouterMetierTopo(String nom,String lieu,String description, boolean disponible, Grimpeur g) {
+	public Topo ajouterMetierTopo(String nom,String lieu, boolean disponible, Grimpeur g,Site s) {
 		Date date=new Date();
-		Topo t= new Topo(nom,lieu,description,date,disponible,g);
+
+		Topo t= new Topo(nom,lieu, date,disponible,g,s);
 		try {
 			t=daoTopo.save(t);
 		}catch (Exception e) {
@@ -31,12 +30,11 @@ public class MetierTopoImpl implements  MetierTopo {
 	}
 
 	@Override
-	public Topo modifierMetierTopo(String nom,String lieu,String description, boolean disponible, Grimpeur g, Topo t) {
+	public Topo modifierMetierTopo(String nom,String lieu, boolean disponible, Grimpeur g, Topo t) {
 		t.setNom(nom);
 		t.setLieu(lieu);
-		t.setDescription(description);
 		t.setDisponible(disponible);
-		t.setCreateur(g);
+		t.setProprietaire(g);
 		try {
 			t=daoTopo.save(t);
 		}catch (Exception e) {
@@ -46,14 +44,22 @@ public class MetierTopoImpl implements  MetierTopo {
 
 	@Override
 	public Topo trouverMetierTopo(Long id) {
-		Topo t=null;
+		List<Topo> list = new ArrayList<Topo>();
+		Topo t = null;
 		try {
-			t=daoTopo.getOne(id);
-		}catch (Exception e) {
+			list.addAll(listeTousMetierTopo());
+			for (int i = 0; i < list.size(); i++) {
+				t = list.get(i);
+				Long idGrimpeur = t.getIdTopo();
+				if (idGrimpeur == id) {
+					break;
+				}
+
+			}
+		} catch (Exception e) {
 		}
 		return t;
 	}
-
 	@Override
 	public void supprimerMetierTopo(Topo t) {
 		try {
@@ -62,35 +68,26 @@ public class MetierTopoImpl implements  MetierTopo {
 		}
 
 	}
-
 	@Override
-	public List<Topo> chercherParNomMetierTopo(String name) {
+	public List<Topo> listeParSiteMetierTopo(Site s) {
 		List<Topo> list;
-		List<Topo> listReturn = null;
-		Topo t ;
+		List<Topo> listReturn = new ArrayList<Topo>();
+		Topo t;
 		try {
 			list = listeTousMetierTopo();
 			for (int i = 0; i < list.size(); i++) {
 				t = list.get(i);
-				String nom = t.getNom();
-				if (nom.equalsIgnoreCase(name)) {
+				if (t.getSite().getIdSite() == s.getIdSite()) {
 					listReturn.add(t);
 				}
-				
-			}
-			for (int i = 0; i < list.size(); i++) {
-				t = list.get(i);
-				String nom = t.getLieu();
-				if (nom.equalsIgnoreCase(name)) {
-					listReturn.add(t);
-				}
-				
 			}
 		} catch (Exception e) {
 
 		}
 		return listReturn;
 	}
+
+
 
 	@Override
 	public List<Topo> listeTousMetierTopo() {

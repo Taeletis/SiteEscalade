@@ -55,20 +55,36 @@ public class SecteurServlet extends HttpServlet {
 		 	request.setAttribute("nom",secteur.getNom());
 		 	request.setAttribute("descrption",secteur.getDescription());
 		 	request.setAttribute("lienImage",secteur.getLienCarte());
-		 	HashMap<Voie,List<Longueur>> h= new HashMap <Voie,List<Longueur>>();
 			List <Voie> voies= new ArrayList<Voie>();
 		 	voies.addAll(metierVoie.listeParSecteurMetierVoie(secteur));
-		 	Iterator it=voies.iterator();
-		 	while(it.hasNext())
-		 	{
-		 		Voie v =(Voie) it.next();
-		 		List<Longueur> l=metierLongueur.listeParVoieMetierLongueur(v);
-		 		h.put(v,l);	
-		 	}
+		 	
+		 	HashMap<Voie,String> h= new HashMap <Voie,String>();
 		 	System.out.println("camarche");
-		 	request.setAttribute("voies",h); 
-		
+		 	Iterator it= voies.iterator();
+		 	while(it.hasNext()) {
+				Voie v=(Voie)it.next();
+				String cotation="";
+				cotation=metierVoie.cotationMetierVoie(v);
+				System.out.println(v.getNom()+cotation) ;
+				 h.put(v,cotation);
 		 	}
+		 	
+		 	HashMap<HashMap<Voie,String>,List<Longueur>> h2 = new HashMap<HashMap<Voie,String>,List<Longueur>>();
+		 	it=h.keySet().iterator();
+			while(it.hasNext()) {
+				Voie v=(Voie)it.next();
+				String cotation="";
+				 cotation=h.get(v);
+				System.out.println(v.getNom()+cotation) ;
+				HashMap<Voie,String>h3= new HashMap <Voie,String>();
+				
+		 		List<Longueur> l=metierLongueur.listeParVoieMetierLongueur(v);
+		 		h3.put(v,cotation);
+				h2.put(h3,l);
+				
+			}
+				request.setAttribute("voies",h2); 
+			}
 		 	catch (Exception e){System.out.println(e);}
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Secteur.jsp").forward(request, response);

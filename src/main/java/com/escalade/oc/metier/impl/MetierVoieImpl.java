@@ -22,8 +22,8 @@ public class MetierVoieImpl implements MetierVoie {
 	private MetierLongueur metierLongueur;
 
 	@Override
-	public Voie ajouterMetierVoie(String nom, String lienPhoto, String annotation, Secteur s) {
-		Voie v = new Voie(nom, lienPhoto, annotation, s);
+	public Voie ajouterMetierVoie(String nom, String annotation, Secteur s) {
+		Voie v = new Voie(nom, annotation, s);
 
 		try {
 			v = daoVoie.save(v);
@@ -33,9 +33,8 @@ public class MetierVoieImpl implements MetierVoie {
 	}
 
 	@Override
-	public Voie modifierMetierVoie(String nom, String lienPhoto, String annotation, Voie v) {
+	public Voie modifierMetierVoie(String nom, String annotation, Voie v) {
 		v.setNom(nom);
-		v.setLienPhoto(lienPhoto);
 		v.setAnnotation(annotation);
 
 		try {
@@ -91,7 +90,8 @@ public class MetierVoieImpl implements MetierVoie {
 		String niveau = "A";
 		for (int i = 0; i < list.size(); i++) {
 			Longueur l = list.get(i);
-			valeur = Integer.parseInt(l.getCotation());
+			String chiffre=l.getCotation().substring(0,1);
+			valeur = Integer.parseInt(chiffre);
 			if (valeurHaute < valeur) {
 				String s = l.getCotation().substring(1);
 				valeurHaute=valeur;
@@ -100,13 +100,16 @@ public class MetierVoieImpl implements MetierVoie {
 			if (valeurHaute == valeur) {
 				String s = l.getCotation().substring(1);
 				if(!niveau.equals(s)) {
+					
 					if(s.equals("B")&&niveau.equals("A")||s.equals("C")&&niveau.equals("A")||s.equals("C")&&niveau.equals("B")) {
 						cotation=valeurHaute+s;
+						niveau=s;
 					}
 				}
 			}
 			
 		}
+		System.out.println(cotation);
 		return cotation;
 	}
 }

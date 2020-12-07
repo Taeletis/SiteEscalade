@@ -1,9 +1,11 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.escalade.oc.beans.Grimpeur;
@@ -13,7 +15,7 @@ import com.escalade.oc.beans.Topo;
 import com.escalade.oc.dao.DaoReservation;
 import com.escalade.oc.metier.MetierReservation;
 @Service
-public abstract class MetierReservationImpl implements MetierReservation{
+public  class MetierReservationImpl implements MetierReservation{
 	@Autowired
 	private DaoReservation daoReservation;
 
@@ -63,7 +65,7 @@ public abstract class MetierReservationImpl implements MetierReservation{
 	@Override
 	public List<Reservation> listeParStatutMetierReservation(StatutType s) {
 		List<Reservation> list;
-		List<Reservation> listReturn = null;
+		List<Reservation> listReturn = new ArrayList<Reservation>();
 		Reservation r ;
 		try {
 			list = daoReservation.findAll();

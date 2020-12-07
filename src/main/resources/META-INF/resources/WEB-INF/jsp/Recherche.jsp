@@ -43,16 +43,32 @@ Bienvenu ${grimpeur.nom}
 		
 			<tr>
 				<th>Nom</th>
+				
+				<th>Cotation</th>
 				<th>lieu</th>
+				<th>Créateur</th>
 				<th>lienImage</th>
+				
 			</tr>
 			<c:forEach items="${sites}" var="s">
+			<c:forEach items="${s.value}" var="v">
 				<tr>
 				
-					<td><a href="/site?id=${s.idSite}">${s.nom} </a></td>
-					<td>${s.lieu}</td>
-					<td><img src="${s.lienImage}"></td>
-				</tr>
+					<td><a href="/site?id=${s.key.idSite}">${s.key.nom} </a></td>
+					
+					
+					<td>${v.value}</td>
+					<td>${s.key.lieu}</td>
+					<td><button onclick="window.location.href = '/grimpeur?id=${v.key.idGrimpeur}';">${v.key.nom}</button></td>
+					<td><img src="${s.key.lienImage}"></td>
+					
+					
+					
+					
+					
+					
+				<tr>
+				</c:forEach>
 			</c:forEach>
 		</table>
 

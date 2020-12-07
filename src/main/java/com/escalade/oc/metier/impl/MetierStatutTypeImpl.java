@@ -1,5 +1,6 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,14 +49,22 @@ public class MetierStatutTypeImpl implements MetierStatutType{
 
 	@Override
 	public StatutType trouverMetierStatutType(Long id) {
-		StatutType s =null;
+		List<StatutType> list = new ArrayList<StatutType>();
+		StatutType s = null;
 		try {
-			s=daoStatutType.getOne(id);
-		}catch(Exception e) {
-			
+			list.addAll(listeTousMetierStatutType());
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				Long idGrimpeur = s.getIdStatut();
+				if (idGrimpeur == id) {
+					break;
+				}
+
+			}
+		} catch (Exception e) {
 		}
 		return s;
-	}
+}
 
 	@Override
 	public List<StatutType> listeTousMetierStatutType() {

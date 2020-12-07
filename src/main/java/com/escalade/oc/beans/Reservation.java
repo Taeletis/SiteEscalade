@@ -45,6 +45,7 @@ public class Reservation implements Serializable {
 		super();
 		this.emprunteur = emprunteur;
 		this.topo = topo;
+		this.statut = s;
 	}
 	public Grimpeur getEmprunteur() {
 		return emprunteur;

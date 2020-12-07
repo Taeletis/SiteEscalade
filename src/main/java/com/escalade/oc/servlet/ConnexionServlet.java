@@ -60,8 +60,8 @@ public class ConnexionServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				Grimpeur g =metierGrimpeur.trouverParEmailMetierGrimpeur(email);
 				session.setAttribute("grimpeur",g);
-				
-				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Acceuil.jsp").forward(request, response);
+				HttpServletResponse httpResponse = (HttpServletResponse) response;
+				httpResponse.sendRedirect("/recherche");
 			} else {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request, response);
 			}

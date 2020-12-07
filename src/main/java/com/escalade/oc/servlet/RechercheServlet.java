@@ -2,6 +2,8 @@ package com.escalade.oc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -39,16 +41,31 @@ public class RechercheServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 if (!request.getParameterMap().containsKey("sites")) {
-				request.setAttribute("sites",metierSite.listeMetierSite());
+			 List<Site> l= metierSite.listeMetierSite();
+			 HashMap<Site,HashMap<Grimpeur,String>> h = new HashMap<Site,HashMap<Grimpeur,String>>();
+				
+				Iterator it= l.iterator();
+				while(it.hasNext()) {
+					Site s=(Site)it.next();
+					String cotation=metierSite.cotationMetierSite(s);
+					Grimpeur g=s.getCreateur();
+					HashMap<Grimpeur,String> h2 = new HashMap<Grimpeur,String>();
+					h2.put(g,cotation);
+					h.put(s,h2);
+					System.out.println(h);
+					
+				}
+				request.setAttribute("sites",h);
 				
 			}
 		try {
 		HttpSession session = request.getSession();
 		
 		Grimpeur g=(Grimpeur)session.getAttribute("grimpeur");
-		System.out.println(g.getNom());
+		
 		
 		request.setAttribute("utilisateur",g.getNom());
+		
 		
 		
 		
@@ -75,7 +92,20 @@ public class RechercheServlet extends HttpServlet {
 			l.addAll(metierSite.chercherParNomMetierSite(nom));
 			
 			l.addAll(metierSite.chercherParLieuMetierSite(lieu));
-			request.setAttribute("sites", l);
+			HashMap<Site,HashMap<Grimpeur,String>> h = new HashMap<Site,HashMap<Grimpeur,String>>();
+			
+			Iterator it= l.iterator();
+			while(it.hasNext()) {
+				Site s=(Site)it.next();
+				String cotation=metierSite.cotationMetierSite(s);
+				Grimpeur g=s.getCreateur();
+				HashMap<Grimpeur,String> h2 = new HashMap<Grimpeur,String>();
+				h2.put(g,cotation);
+				h.put(s,h2);
+				System.out.println(h);
+				
+			}
+			request.setAttribute("sites", h);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
 			
 			System.out.println("recherche");

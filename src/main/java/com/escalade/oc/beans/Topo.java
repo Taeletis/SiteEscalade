@@ -31,31 +31,31 @@ public class Topo implements Serializable {
 	
 	private String lieu;
 
-	private String description;
-
 	private Date dateParution;
 
 	private boolean disponible;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_CREATEUR")
-	private Grimpeur createur;
+	@JoinColumn(name = "ID_PROPIETAIRE")
+	private Grimpeur proprietaire;
 	@OneToMany(mappedBy = "topo", fetch = FetchType.LAZY)
 	private Collection<Reservation> reservations;
-	@OneToMany(mappedBy = "topo", fetch = FetchType.LAZY)
-	private Collection<Site> sites;
+	@ManyToOne
+	@JoinColumn(name = "ID_Site")
+	private Site site;
 	public Topo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Topo(String nom,String lieu,String description, Date dateParutrion, boolean disponible, Grimpeur proprietaire) {
+	public Topo(String nom,String lieu, Date dateParutrion, boolean disponible, Grimpeur proprietaire,Site s) {
 		super();
+		
 		this.nom = nom;
 		this.lieu=lieu;
-		this.description=description;
 		this.dateParution = dateParutrion;
 		this.disponible = disponible;
-		this.createur = proprietaire;
+		this.proprietaire = proprietaire;
+		this.site=s;
 	}
 	public Long getIdTopo() {
 		return idTopo;
@@ -81,11 +81,11 @@ public class Topo implements Serializable {
 	public void setDisponible(boolean disponible) {
 		this.disponible = disponible;
 	}
-	public Grimpeur getCreateur() {
-		return createur;
+	public Grimpeur getProprietaire() {
+		return proprietaire;
 	}
-	public void setCreateur(Grimpeur createur) {
-		this.createur = createur;
+	public void setProprietaire(Grimpeur proprietaire) {
+		this.proprietaire = proprietaire;
 	}
 	public Collection<Reservation> getReservations() {
 		return reservations;
@@ -93,17 +93,12 @@ public class Topo implements Serializable {
 	public void setReservations(Collection<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	public Collection<Site> getSites() {
-		return sites;
+	
+	public Site getSite() {
+		return site;
 	}
-	public void setSites(Collection<Site> sites) {
-		this.sites = sites;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSite(Site site) {
+		this.site = site;
 	}
 	public String getLieu() {
 		return lieu;

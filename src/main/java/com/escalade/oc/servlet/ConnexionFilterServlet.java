@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/recherche", "/site","/secteur" })
+@WebFilter(urlPatterns = { "/recherche", "/site","/secteur","/topo" })
 public class ConnexionFilterServlet implements Filter {
 
 	@Override

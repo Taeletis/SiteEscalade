@@ -2,6 +2,8 @@ package com.escalade.oc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,9 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
+import com.escalade.oc.metier.MetierCommentaire;
+import com.escalade.oc.metier.MetierReservation;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
 
@@ -26,6 +29,8 @@ public class SiteServlet extends HttpServlet {
 	private MetierSecteur metierSecteur;
 	@Autowired
 	private MetierSite metierSite;
+	@Autowired
+	private MetierCommentaire metierCommentaire;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -53,12 +58,19 @@ public class SiteServlet extends HttpServlet {
 			 	Long siteId= Long.parseLong(id);
 			 	
 		 	Site site=metierSite.trouverMetierSite(siteId);
-		 	request.setAttribute("nom",site.getNom());
-		 	request.setAttribute("lieu",site.getLieu());
-		 	request.setAttribute("lienImage",site.getLienImage());
+		 	request.setAttribute("site",site);
+		 	request.setAttribute("cotation",metierSite.cotationMetierSite(site));
+		 	request.setAttribute("commentaires",metierCommentaire.listeParSiteMetierCommentaire(site));
 		 	List<Secteur> l= new ArrayList <Secteur>();
 		 	l.addAll(metierSecteur.listeParSiteMetierSecteur(site));
-			request.setAttribute("secteurs",l); 
+		 	HashMap<Secteur,String> h = new HashMap<Secteur,String>();
+		 	Iterator it= l.iterator();
+			while(it.hasNext()) {
+				Secteur s=(Secteur)it.next();
+				String cotation=metierSecteur.cotationMetierSecteur(s);
+				h.put(s,cotation);
+			}
+			request.setAttribute("secteurs",h); 
 		
 		 	}
 		 	catch (Exception e){}

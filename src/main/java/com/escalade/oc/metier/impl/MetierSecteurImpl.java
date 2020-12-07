@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.escalade.oc.beans.Longueur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.Voie;
@@ -108,10 +107,13 @@ public class MetierSecteurImpl implements MetierSecteur {
 		int valeur;
 		int valeurHaute = 0;
 		String niveau = "A";
+		
 		for (int i = 0; i < list.size(); i++) {
 			Voie v = list.get(i);
 			String cotationVoie = metierVoie.cotationMetierVoie(v);
-			valeur = Integer.parseInt(cotationVoie);
+			if(cotationVoie.length()==2) {
+			String chiffre=cotationVoie.substring(0,1);
+			valeur = Integer.parseInt(chiffre);
 			if (valeurHaute < valeur) {
 				String lettre = cotationVoie.substring(1);
 				valeurHaute = valeur;
@@ -123,8 +125,10 @@ public class MetierSecteurImpl implements MetierSecteur {
 					if (lettre.equals("B") && niveau.equals("A") || lettre.equals("C") && niveau.equals("A")
 							|| lettre.equals("C") && niveau.equals("B")) {
 						cotation = valeurHaute + lettre;
+						niveau=lettre;
 					}
 				}
+			}
 			}
 
 		}

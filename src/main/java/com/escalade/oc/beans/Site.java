@@ -30,7 +30,7 @@ public class Site implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "ID_GRIMPEUR")
-	private Grimpeur proprietaire;
+	private Grimpeur createur;
 	@ManyToOne
 	@JoinColumn(name = "ID_MODIFICATEUR")
 	private Grimpeur modifieur;
@@ -38,9 +38,9 @@ public class Site implements Serializable {
 	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
 	private Collection<Secteur> secteurs;
 
-	@ManyToOne
-	@JoinColumn(name = "ID_TOPO")
-	private Topo topo;
+	
+	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
+	private Collection<Topo> topo;
 
 	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY) // private
 	Collection<Commentaire> commentaires;
@@ -49,13 +49,13 @@ public class Site implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Site(String nom, String lienImage,String lieu, Topo topo) {
+	public Site(String nom, String lienImage,String lieu,Grimpeur createur) {
 		super();
 		this.nom = nom;
 		this.lienImage=lienImage;
 		this.lieu = lieu;
 		this.mention = false;
-		this.topo = topo;
+		this.createur = createur;
 	}
 
 	public long getIdSite() {
@@ -106,14 +106,14 @@ public class Site implements Serializable {
 		this.secteurs = secteurs;
 	}
 
-	public Topo getTopo() {
+
+
+	public Collection<Topo> getTopo() {
 		return topo;
 	}
-
-	public void setTopo(Topo topo) {
+	public void setTopo(Collection<Topo> topo) {
 		this.topo = topo;
 	}
-
 	public Collection<Commentaire> getCommentaires() {
 		return commentaires;
 	}
@@ -121,11 +121,11 @@ public class Site implements Serializable {
 	public void setCommentaires(Collection<Commentaire> commentaires) {
 		this.commentaires = commentaires;
 	}
-	public Grimpeur getProprietaire() {
-		return proprietaire;
+	public Grimpeur getCreateur() {
+		return createur;
 	}
-	public void setProprietaire(Grimpeur proprietaire) {
-		this.proprietaire = proprietaire;
+	public void setCreateur(Grimpeur createur) {
+		this.createur = createur;
 	}
 	public Grimpeur getModifieur() {
 		return modifieur;

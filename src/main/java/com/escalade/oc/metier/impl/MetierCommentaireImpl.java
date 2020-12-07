@@ -1,5 +1,6 @@
 package com.escalade.oc.metier.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 	@Override
 	public List<Commentaire> listeParSiteMetierCommentaire(Site s) {
 		List<Commentaire> list;
-		List<Commentaire> listReturn = null;
+		List<Commentaire> listReturn = new ArrayList<Commentaire>();
 		Commentaire t ;
 		try {
 			list = daoCommentaire.findAll();

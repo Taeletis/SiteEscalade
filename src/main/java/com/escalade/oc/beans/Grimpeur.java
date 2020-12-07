@@ -27,9 +27,9 @@ public class Grimpeur implements Serializable {
 	private boolean membre;
 	@OneToMany(mappedBy = "emprunteur", fetch = FetchType.LAZY)
 	private Collection<Reservation> reservations;
-	@OneToMany(mappedBy = "createur", fetch = FetchType.LAZY)
-	private Collection<Topo> topos;
 	@OneToMany(mappedBy = "proprietaire", fetch = FetchType.LAZY)
+	private Collection<Topo> topos;
+	@OneToMany(mappedBy = "createur", fetch = FetchType.LAZY)
 	private Collection<Site> sites;
 	@OneToMany(mappedBy = "modifieur", fetch = FetchType.LAZY)
 	private Collection<Site> sitesModif;

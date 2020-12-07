@@ -23,7 +23,6 @@ public class Voie implements Serializable {
 	@GeneratedValue
 	private long idVoie;
 	private String nom;
-	private String lienPhoto;
 	private String annotation;
 
 	@ManyToOne
@@ -38,9 +37,8 @@ public class Voie implements Serializable {
 		super(); // TODO Auto-generated constructor stub
 
 	}
-	public Voie(String nom, String lienPhoto, String annotation, Secteur s) {
+	public Voie(String nom, String annotation, Secteur s) {
 		this.nom=nom;
-		this.lienPhoto=lienPhoto;
 		this.annotation=annotation;
 		this.secteur=s;
 
@@ -76,13 +74,7 @@ public class Voie implements Serializable {
 		this.nom = nom;
 	}
 
-	public String getLienPhoto() {
-		return lienPhoto;
-	}
 
-	public void setLienPhoto(String lienPhoto) {
-		this.lienPhoto = lienPhoto;
-	}
 
 	public String getAnnotation() {
 		return annotation;
