@@ -46,12 +46,21 @@ public class MetierVoieImpl implements MetierVoie {
 
 	@Override
 	public Voie trouverMetierVoie(Long id) {
-		Voie v = null;
+		Voie voie = null;
+		List<Voie> list = new ArrayList<Voie>();
 		try {
-			v = daoVoie.getOne(id);
+			list.addAll(daoVoie.findAll());
+			for (int i = 0; i < list.size(); i++) {
+				voie = list.get(i);
+				Long idVoie = voie.getIdVoie();
+				if (idVoie == id) {
+					break;
+				}
+			}
 		} catch (Exception e) {
+
 		}
-		return v;
+		return voie;
 	}
 
 	@Override
@@ -66,12 +75,12 @@ public class MetierVoieImpl implements MetierVoie {
 	public List<Voie> listeParSecteurMetierVoie(Secteur s) {
 		List<Voie> list;
 		List<Voie> listReturn = new ArrayList<Voie>();
-		Voie v ;
+		Voie v;
 		try {
 			list = daoVoie.findAll();
 			for (int i = 0; i < list.size(); i++) {
 				v = list.get(i);
-				if (s.getIdSecteur()==v.getSecteur().getIdSecteur()) {
+				if (s.getIdSecteur() == v.getSecteur().getIdSecteur()) {
 					listReturn.add(v);
 				}
 			}
@@ -90,24 +99,25 @@ public class MetierVoieImpl implements MetierVoie {
 		String niveau = "A";
 		for (int i = 0; i < list.size(); i++) {
 			Longueur l = list.get(i);
-			String chiffre=l.getCotation().substring(0,1);
+			String chiffre = l.getCotation().substring(0, 1);
 			valeur = Integer.parseInt(chiffre);
 			if (valeurHaute < valeur) {
 				String s = l.getCotation().substring(1);
-				valeurHaute=valeur;
-				cotation=valeurHaute+s;
+				valeurHaute = valeur;
+				cotation = valeurHaute + s;
 			}
 			if (valeurHaute == valeur) {
 				String s = l.getCotation().substring(1);
-				if(!niveau.equals(s)) {
-					
-					if(s.equals("B")&&niveau.equals("A")||s.equals("C")&&niveau.equals("A")||s.equals("C")&&niveau.equals("B")) {
-						cotation=valeurHaute+s;
-						niveau=s;
+				if (!niveau.equals(s)) {
+
+					if (s.equals("B") && niveau.equals("A") || s.equals("C") && niveau.equals("A")
+							|| s.equals("C") && niveau.equals("B")) {
+						cotation = valeurHaute + s;
+						niveau = s;
 					}
 				}
 			}
-			
+
 		}
 		System.out.println(cotation);
 		return cotation;

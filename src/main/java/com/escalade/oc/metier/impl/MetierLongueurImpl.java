@@ -42,12 +42,21 @@ public class MetierLongueurImpl implements MetierLongueur {
 
 	@Override
 	public Longueur trouverMetierLongueur(Long id) {
-		Longueur l = null;
+		Longueur longueur = null;
+		List<Longueur> list = new ArrayList<Longueur>();
 		try {
-			l = daoLongueur.getOne(id);
+			list.addAll(daoLongueur.findAll());
+			for (int i = 0; i < list.size(); i++) {
+				longueur = list.get(i);
+				Long idLongueur = longueur.getIdLongueur();
+				if (idLongueur == id) {
+					break;
+				}
+			}
 		} catch (Exception e) {
+
 		}
-		return l;
+		return longueur;
 	}
 
 	@Override

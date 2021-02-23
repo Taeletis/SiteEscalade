@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -85,15 +87,33 @@ public class RechercheServlet extends HttpServlet {
 
 		String nom = request.getParameter("nom");
 		String lieu = request.getParameter("lieu");
-
+		String grimpeur = request.getParameter("grimpeur");
+		
+		List <Site> liste=new ArrayList<Site>();
 		try {
 			List<Site> l= new ArrayList <Site>();
+		if(!"".equals(nom))
+			liste.addAll(metierSite.chercherParNomMetierSite(nom));
 		
-			l.addAll(metierSite.chercherParNomMetierSite(nom));
-			
-			l.addAll(metierSite.chercherParLieuMetierSite(lieu));
+		if(!"".equals(grimpeur))
+			liste.addAll(metierSite.chercherParGrimpeurMetierSite(grimpeur));
+		if(!"".equals(lieu))
+			liste.addAll(metierSite.chercherParLieuMetierSite(lieu));
+		
+		
+		System.out.println(liste);
 			HashMap<Site,HashMap<Grimpeur,String>> h = new HashMap<Site,HashMap<Grimpeur,String>>();
+			for(Site s:liste){
+				boolean check =true;
+				for(Site s2:l) {
+						if (s.getIdSite()==s2.getIdSite())
+							check=false;
+				}
 			
+				if(check)
+					l.add(s);
+			}
+			System.out.println(l);
 			Iterator it= l.iterator();
 			while(it.hasNext()) {
 				Site s=(Site)it.next();
@@ -106,9 +126,11 @@ public class RechercheServlet extends HttpServlet {
 				
 			}
 			request.setAttribute("sites", h);
+			System.out.println("recherche");
+			System.out.println(h);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
 			
-			System.out.println("recherche");
+			
 
 		} catch (Exception e) {
 			System.out.println("truc");

@@ -48,7 +48,7 @@ public class ConnexionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println(request.getParameter("action2"));
+		
 
 		String email = request.getParameter("email");
 		String motDePasse = request.getParameter("motdepasse");

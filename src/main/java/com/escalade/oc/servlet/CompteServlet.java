@@ -47,9 +47,14 @@ public class CompteServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
 		List<Reservation> liste=new ArrayList<Reservation>();
+		try {
 	 	liste.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
 	 	request.setAttribute("Reservations",liste); 
+		} catch (Exception e) {
+			System.out.println("truc");
+			e.printStackTrace();
 
+		}
 		this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Compte.jsp").forward(request, response);
 	}
 

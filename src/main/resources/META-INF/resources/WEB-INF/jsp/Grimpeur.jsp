@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<jsp:include page="Menu.jsp"></jsp:include>
 <title>Insert title here</title>
 </head>
 
@@ -27,9 +28,11 @@
 				<tr>
 					<td>${g.nom}</td>
 					<td>${g.prenom}</td>
-					<td> ${ g.Membre ? 'admin' : 'membre' }</td>
+					<td> ${ g.membre ? 'admin' : 'membre' }</td>
 					<td>${g.email}</td>
-					<th> <a href="/Recherche?id=${g.idGrimpeur}">liste des sites </a></th>
+					<th><form method="post" action="recherche">
+					<input type="hidden" name="grimpeur" id="grimpeur" value="${g.nom}" />
+					 <input type="submit" value="liste des sites" class="sansLabel" /> </form></th>
 					
 				</tr>
 

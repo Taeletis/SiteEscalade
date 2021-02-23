@@ -18,6 +18,13 @@ public class Longueur implements Serializable {
 	@Id
 	@GeneratedValue
 	private long idLongueur;
+	public long getIdLongueur() {
+		return idLongueur;
+	}
+	public void setIdLongueur(long idLongueur) {
+		this.idLongueur = idLongueur;
+	}
+
 	private double hauteur;
 	private String cotation;
 	private String annotation;

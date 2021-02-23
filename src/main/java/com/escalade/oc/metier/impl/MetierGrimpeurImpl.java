@@ -114,8 +114,6 @@ public class MetierGrimpeurImpl implements MetierGrimpeur {
 		List<Grimpeur> list = listeTousMetierGrimpeur();
 		for (int i = 0; i < list.size(); i++) {
 			Grimpeur g = list.get(i);
-			System.out.println(g.getEmail() + email);
-			System.out.println(g.getMdp() + mdp);
 			if (g.getEmail().equals(email) && g.getMdp().equals(mdp)) {
 				membre = true;
 			}

@@ -141,24 +141,21 @@ public class MetierSiteImpl implements MetierSite {
 		List<Site> list = new ArrayList<Site>();
 		List<Site> listReturn = new ArrayList<Site>();
 		Site s;
+		if(name!=null) {
 		try {
 			list.addAll(listeMetierSite());
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				String nom = s.getNom();
-				if (nom.equalsIgnoreCase(name)) {
+				if (nom.contains(name)) {
 					listReturn.add(s);
 				}
 
 			}
-			/*
-			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
-			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
-			 * 
-			 * }
-			 */
+			
 		} catch (Exception e) {
 
+		}
 		}
 		return listReturn;
 	}
@@ -167,23 +164,65 @@ public class MetierSiteImpl implements MetierSite {
 	public List<Site> chercherParLieuMetierSite(String endroit) {
 		List<Site> list = new ArrayList<Site>();
 		List<Site> listReturn = new ArrayList<Site>();
+		System.out.println(endroit+" metier");
+		if(endroit!=null) {
+		try {
+			list.addAll(listeMetierSite());
+			for (Site s: list) {
+				
+				String lieu = s.getLieu();
+				if (lieu.contains(endroit)) {
+					listReturn.add(s);
+					System.out.println(listReturn);
+				}
+
+			}
+			
+		} catch (Exception e) {
+
+		}
+		}
+		System.out.println(listReturn);
+		return listReturn;
+	}
+	
+	public List<Site> chercherParGrimpeurMetierSite(String  g) {
+		List<Site> list = new ArrayList<Site>();
+		List<Site> listReturn = new ArrayList<Site>();
+		Site s;
+		try {
+			if(g!=null) {
+			list.addAll(listeMetierSite());
+			for (int i = 0; i < list.size(); i++) {
+				s = list.get(i);
+				Grimpeur gg = s.getCreateur();
+				if (gg.getNom().contains(g)) {
+					listReturn.add(s);
+				}
+
+			}
+			}
+		} catch (Exception e) {
+
+		}
+		return listReturn;
+	}
+	
+	public List<Site> chercherParGrimpeurMetierSite(Grimpeur  g) {
+		List<Site> list = new ArrayList<Site>();
+		List<Site> listReturn = new ArrayList<Site>();
 		Site s;
 		try {
 			list.addAll(listeMetierSite());
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
-				String lieu = s.getLieu();
-				if (lieu.equalsIgnoreCase(endroit)) {
+				Grimpeur gg = s.getCreateur();
+				if (g.getIdGrimpeur().equals(gg.getIdGrimpeur())) {
 					listReturn.add(s);
 				}
 
 			}
-			/*
-			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
-			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
-			 * 
-			 * }
-			 */
+		
 		} catch (Exception e) {
 
 		}

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<jsp:include page="Menu.jsp"></jsp:include>
 <title>Insert title here</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
 				<tr>
 					<td>${grimpeur.nom}</td>
 					<td>${grimpeur.prenom}</td>
-					<td> ${ grimpeur.Membre ? 'admin' : 'membre' }</td>
+					<td> ${ grimpeur.membre ? 'admin' : 'membre' }</td>
 					<td>${grimpeur.email}</td>
 				</tr>
 

@@ -16,4 +16,6 @@ public interface MetierSite {
 	public String cotationMetierSite (Site s);
 	public List<Site> chercherParNomMetierSite(String name);
 	public List<Site> chercherParLieuMetierSite(String endroit);
+	public List<Site> chercherParGrimpeurMetierSite(Grimpeur g);
+	public List<Site> chercherParGrimpeurMetierSite(String g);
 }
