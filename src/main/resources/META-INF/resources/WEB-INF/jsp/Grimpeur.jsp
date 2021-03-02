@@ -30,7 +30,7 @@
 					<td>${g.prenom}</td>
 					<td> ${ g.membre ? 'admin' : 'membre' }</td>
 					<td>${g.email}</td>
-					<th><form method="post" action="recherche">
+					<th><form method="post" action="">
 					<input type="hidden" name="grimpeur" id="grimpeur" value="${g.nom}" />
 					 <input type="submit" value="liste des sites" class="sansLabel" /> </form></th>
 					

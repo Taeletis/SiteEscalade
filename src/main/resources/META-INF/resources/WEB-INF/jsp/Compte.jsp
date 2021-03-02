@@ -1,56 +1,60 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<meta charset="UTF-8">
 <jsp:include page="Menu.jsp"></jsp:include>
 <title>Insert title here</title>
 </head>
 <body>
 <body>
-	Bienvenu ${grimpeur.nom}
-	</br>
-	</br>
-	</br>
-	</br>
-
-	<div>
-			<table>
-				<tr>
-					<td>${grimpeur.nom}</td>
-					<td>${grimpeur.prenom}</td>
-					<td> ${ grimpeur.membre ? 'admin' : 'membre' }</td>
-					<td>${grimpeur.email}</td>
-				</tr>
-
-			</table>
-		</div>
-			<div>
-			<table>
-		<c:forEach items="${Reservations}" var="r">
-				<tr>
-					<td><a href="/secteur?id=${r.idReservation}">${r.emprunteur.nom}</a></td>
-					<td>${r.statut.statut}</td>
-				
-				</tr>
-			</c:forEach>
-			</table>
-		</div>
+	
+<div class="container">
 		
+		<div class="row">
+
+			<div class="col">
+				<p>
+					Nom : ${grimpeur.nom}
+				</p>
 		
-	</br>
-	</br>
-	===================================================================================================================
-	</br>
-	</br>
-<ul>
-<li><form method="post" action="maj">
-            <fieldset>
-                <legend>Mettre � jour ses informations</legend>
-                <p>Vous pouvez vous inscrire via ce formulaire.</p>
-                
-                  <label for="nom">Nom<span class="requis">*</span></label>
+				<p>Prénom : ${grimpeur.prenom}</p>
+			
+				<p>Statut : ${ grimpeur.membre ? 'admin' : 'membre' }</p>
+
+				<p>Email :  ${grimpeur.email}</p>
+			</div>
+
+			<div class="col">
+		
+			<button type="button" class="btn btn-warning" data-toggle="modal"
+									data-target="#maj">Mettre à jour ses informations</button>
+
+								<!-- Modal -->
+								<div class="modal fade" id="maj" tabindex="-1" role="dialog"
+									aria-labelledby="majCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="majTitle">Modifier</h5>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<form method="post" action="">
+												<div class="modal-body">
+
+
+
+
+
+													 <label for="nom">Nom<span class="requis">*</span></label>
                 <input type="text" id="nom" name="nom" value="${grimpeur.nom}" size="20" maxlength="20" />
                 <br />
                 
@@ -73,17 +77,43 @@
 
               	<input name="action1" type="hidden" value="inscription">
 
-                <input type="submit" value="maj" class="sansLabel" />
-                
-                <br />
-                
-            </fieldset>
-        </form>
-        </li>
-      
-        </ul>
 
-</body>
-</html>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-primary">Save changes</button>
+												</div>
+
+											</form>
+										</div>
+									</div>
+								</div>
+	</div>
+								</div>
+	
+			<div class="container">
+			<div class="row">
+		<c:forEach items="${Reservations}" var="r">
+		
+				<a href="/secteur?id=${r.idReservation}">${r.emprunteur.nom}</a>
+					<p>${r.statut.statut}</p>
+				
+				
+			</c:forEach>
+		</div>
+		</div>
+		</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+
+
+
 </body>
 </html>

@@ -93,7 +93,7 @@ public class TopoServlet extends HttpServlet {
 			System.out.println(t);
 			System.out.println(g);
 			System.out.println(s);
-			//metierReservation.ajouterMetierReservation( g,  t,  s) ;
+			metierReservation.ajouterMetierReservation( g,  t,  s) ;
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
 			httpResponse.sendRedirect("/recherche");
 		}

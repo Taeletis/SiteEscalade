@@ -50,8 +50,8 @@ public class MetierTopoImpl implements  MetierTopo {
 			list.addAll(listeTousMetierTopo());
 			for (int i = 0; i < list.size(); i++) {
 				t = list.get(i);
-				Long idGrimpeur = t.getIdTopo();
-				if (idGrimpeur == id) {
+				Long idTopo = t.getIdTopo();
+				if (idTopo == id) {
 					break;
 				}
 

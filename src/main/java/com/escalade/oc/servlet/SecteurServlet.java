@@ -57,7 +57,7 @@ public class SecteurServlet extends HttpServlet {
 		 	request.setAttribute("lienImage",secteur.getLienCarte());
 			List <Voie> voies= new ArrayList<Voie>();
 		 	voies.addAll(metierVoie.listeParSecteurMetierVoie(secteur));
-		 	
+	
 		 	HashMap<Voie,String> h= new HashMap <Voie,String>();
 		 	System.out.println("camarche");
 		 	Iterator it= voies.iterator();

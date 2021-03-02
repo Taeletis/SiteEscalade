@@ -54,10 +54,19 @@ public  class MetierReservationImpl implements MetierReservation{
 	@Override
 	public Reservation trouverMetierReservation(Long id) {
 		Reservation r =null;
+		List<Reservation> list = new ArrayList<Reservation>();
+		
 		try {
-			r=daoReservation.getOne(id);
-		}catch(Exception e) {
-			
+			list.addAll(daoReservation.findAll());
+			for (int i = 0; i < list.size(); i++) {
+				r = list.get(i);
+				Long idReservation = r.getIdReservation();
+				if (idReservation == id) {
+					break;
+				}
+
+			}
+		} catch (Exception e) {
 		}
 		return r;
 	}
@@ -86,14 +95,15 @@ public  class MetierReservationImpl implements MetierReservation{
 	@Override
 	public List<Reservation> listeParGrimpeurMetierReservation(Grimpeur g) {
 		List<Reservation> list;
-		List<Reservation> listReturn = null;
+		List<Reservation> listReturn = new ArrayList<Reservation>();
 		Reservation r ;
 		try {
 			list = daoReservation.findAll();
 		
 				for (int i = 0; i < list.size(); i++) {
 					r = list.get(i);
-					if (g.getIdGrimpeur()==r.getEmprunteur().getIdGrimpeur()) {
+					System.out.println(g.getIdGrimpeur()+"//"+r.getEmprunteur().getIdGrimpeur());
+					if (g.getIdGrimpeur().equals(r.getEmprunteur().getIdGrimpeur())) {
 						listReturn.add(r);
 					}
 				}
@@ -107,7 +117,7 @@ public  class MetierReservationImpl implements MetierReservation{
 	@Override
 	public List<Reservation> listeParTopoMetierReservation(Topo t) {
 		List<Reservation> list;
-		List<Reservation> listReturn = null;
+		List<Reservation> listReturn =new ArrayList<Reservation>();
 		Reservation r ;
 		try {
 			list = daoReservation.findAll();

@@ -49,6 +49,7 @@ public class CompteServlet extends HttpServlet {
 		List<Reservation> liste=new ArrayList<Reservation>();
 		try {
 	 	liste.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
+	 	System.out.println(liste);
 	 	request.setAttribute("Reservations",liste); 
 		} catch (Exception e) {
 			System.out.println("truc");

@@ -41,6 +41,14 @@ public class Reservation implements Serializable {
 		super(); // TODO Auto-generated constructor stub
 	}
 	
+	public long getIdReservation() {
+		return idReservation;
+	}
+
+	public void setIdReservation(long idReservation) {
+		this.idReservation = idReservation;
+	}
+
 	public Reservation(Grimpeur emprunteur, Topo topo,StatutType s) {
 		super();
 		this.emprunteur = emprunteur;

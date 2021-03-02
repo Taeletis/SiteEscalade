@@ -11,57 +11,71 @@
 </head>
 
 <body>
-	Bienvenu ${grimpeur.nom}
-	</br>
-	</br>
-	</br>
-	</br>
-	<button onclick="window.location.href = '/site?id=${site.idSite}';">revenir
-		au site</button>
-	</br>
-	</br>
-	</br> liste des topo du site ${site.nom}
-	</br>
-	</br>
-	===================================================================================================================
-	</br>
-	</br>
+	<div class="container">
+	<div class="row">
+			
+			<div class="col">
+				<a class="btn btn-light" href="/site?id=${site.idSite}" role="button">revenir au site </a>
+			</div>
+		</div>
 
 
+<div class="row">
+
+<table class="table">
+									<thead class="thead-dark">
+										<tr>
+											<th scope="col">#</th>
+											<th scope="col">nom</th>
+											<th scope="col">lieu</th>
+											<th scope="col">Date de parution</th>
+											<th scope="col">Créer par</th>
+											<th scope="col">disponibilité</th>
+											<th scope="col"></th>
+
+									</thead>
 	<c:forEach items="${topos}" var="t">
-		<div>
-			<table>
-				<tr>
+									<tbody>
+		
+							
 
+											<c:set var="count" value="${count + 1}" scope="page" />
+										
+
+
+		
+				<tr>
+<th scope="row">${count}</th>
 					<td>${t.nom}</td>
 					<td>${t.lieu}</td>
 					<td>${t.dateParution}</td>
-					<td>par ${t.proprietaire.nom}</td>
-					<td>// topo ${ t.disponible ? 'disponible' : 'indisponible' }</td>
-				</tr>
-
-			</table>
-		</div>
+					<td>${t.proprietaire.nom}</td>
+					<td> ${ t.disponible ? 'disponible' : 'indisponible' }</td>
+				
+<td>
 		<c:choose>
 			<c:when test="${t.disponible}">
 				<form method="post" action="">
-					<fieldset>
-						<legend>Voulez vous reserver?</legend>
-								<input name="idTopo" type="hidden" value="${t.idTopo}">
-						<br /> <input name="idGrimpeur" type="hidden" value="${grimpeur.idGrimpeur}">
-						<input type="submit" value="reserver" class="sansLabel" /> <br />
+					
+						
+						<input name="idTopo" type="hidden" value="${t.idTopo}">
+						<input name="idGrimpeur" type="hidden" value="${grimpeur.idGrimpeur}">
+						<input type="submit" value="reserver" class="sansLabel" />
 
-					</fieldset>
+				
 				</form>
 				</c:when>
 				<c:otherwise>
-				<fieldset>Vous ne pouvez pas reserver ce topo</fieldset>
+				<P>Vous ne pouvez pas reserver ce topo</P>
 			</c:otherwise>
 		</c:choose>
-		=====================================================================
-				</c:forEach>
+		</td>
+		</tr>
+		</c:forEach>
 
-
-
+									</tbody>
+								</table>
+</div>
+</div>
 </body>
 </html>
