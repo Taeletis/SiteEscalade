@@ -1,19 +1,11 @@
 package com.escalade.oc.servlet;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -26,10 +18,11 @@ import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Longueur;
+import com.escalade.oc.beans.Reservation;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
+import com.escalade.oc.beans.Topo;
 import com.escalade.oc.beans.Voie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierSecteur;
@@ -139,15 +132,22 @@ public class MonSiteServlet extends HttpServlet {
 			String description = request.getParameter("description");
 			String idd2 = request.getParameter("idSite");
 			Long idSite = Long.parseLong(idd2);
-
-			Part filePart = request.getPart("carte"); // Retrieves <input type="file" name="file">
-			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-			String root = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources";
-			fileName = new File(fileName).getName();
 			Site s = metierSite.trouverMetierSite(idSite);
+			String carte ="";
+			try {
+			Part filePart = request.getPart("carte"); 
+			String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); 
+			//
+			//String root = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources";
+			String root=getServletContext().getRealPath("");
+			fileName = new File(fileName).getName();
+			
 			filePart.write(root + File.separator + fileName);
-			String carte = root + File.separator + fileName;
-			metierSecteur.ajouterMetierSecteur(nom, "", fileName, description, s);
+			carte = fileName;
+}catch (Exception e){
+				
+			}
+			metierSecteur.ajouterMetierSecteur(nom, carte, description, s);
 
 		}
 
@@ -158,6 +158,7 @@ public class MonSiteServlet extends HttpServlet {
 			Long longueurId = Long.parseLong(idLongueur);
 			Longueur l = metierLongueur.trouverMetierLongueur(longueurId);
 			metierLongueur.modifierMetierLongueur(Double.parseDouble(hauteur), cotation, "", l);
+			
 
 		}
 		if ("modifierVoie".equals(type)) {
@@ -180,7 +181,8 @@ public class MonSiteServlet extends HttpServlet {
 			if ("on".equals(request.getParameter("modifierImage"))) {
 				Part filePart = request.getPart("carte"); // Retrieves <input type="file" name="file">
 				fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-				String root = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources";
+				//String root = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources";
+				String root=getServletContext().getRealPath("");
 				fileName = new File(fileName).getName();
 
 				filePart.write(root + File.separator + fileName);
@@ -190,9 +192,59 @@ public class MonSiteServlet extends HttpServlet {
 				fileName=s.getLienCarte();
 			
 			}
-			metierSecteur.modifierMetierSecteur(nom, "", fileName, description, s);
+			metierSecteur.modifierMetierSecteur(nom, fileName, description, s);
 
 		}
+if ("supprimerSecteur".equals(type)) {
+			
+			if("supprimer".equals(request.getParameter("supprimer"))) {
+			
+			String idSecteur = request.getParameter("idSecteur");
+			Long secteurId = Long.parseLong(idSecteur);
+				Secteur secteur = metierSecteur.trouverMetierSecteur(secteurId);
+				
+					List<Voie> listVoie =metierVoie.listeParSecteurMetierVoie(secteur);
+					for(Voie v : listVoie) {
+						List<Longueur> listLongueur =metierLongueur.listeParVoieMetierLongueur(v);
+						for(Longueur l : listLongueur) {
+							metierLongueur.supprimerMetierLongueur(l);
+						}
+						metierVoie.supprimerMetierVoie(v);
+					}
+					metierSecteur.supprimerMetierSecteur(secteur);
+				}
+			
+		}
+if ("supprimerVoie".equals(type)) {
+	
+	if("supprimer".equals(request.getParameter("supprimer"))) {
+	
+	String idVoie = request.getParameter("idVoie");
+	Long voieId = Long.parseLong(idVoie);
+	Voie v = metierVoie.trouverMetierVoie(voieId);
+		
+				List<Longueur> listLongueur =metierLongueur.listeParVoieMetierLongueur(v);
+				for(Longueur l : listLongueur) {
+					metierLongueur.supprimerMetierLongueur(l);
+				}
+				metierVoie.supprimerMetierVoie(v);
+			}
+			
+		}
+if ("supprimerLongueur".equals(type)) {
+	
+	if("supprimer".equals(request.getParameter("supprimer"))) {
+	
+	String idLongueur = request.getParameter("idLongueur");
+	Long longueurId = Long.parseLong(idLongueur);
+	Longueur l = metierLongueur.trouverMetierLongueur(longueurId);
+				
+					metierLongueur.supprimerMetierLongueur(l);
+			
+			}
+			
+		}
+
 
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		httpResponse.sendRedirect("/monSite?id=" + request.getParameter("id"));

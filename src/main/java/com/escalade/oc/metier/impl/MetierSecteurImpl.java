@@ -22,8 +22,8 @@ public class MetierSecteurImpl implements MetierSecteur {
 	private MetierVoie metierVoie;
 
 	@Override
-	public Secteur ajouterMetierSecteur(String nom, String acces, String lienCarte, String description, Site s) {
-		Secteur secteur = new Secteur(nom,acces , lienCarte, description, s);
+	public Secteur ajouterMetierSecteur(String nom, String lienCarte, String description, Site s) {
+		Secteur secteur = new Secteur(nom , lienCarte, description, s);
 		try {
 			secteur = daoSecteur.save(secteur);
 		} catch (Exception e) {
@@ -32,11 +32,10 @@ public class MetierSecteurImpl implements MetierSecteur {
 	}
 
 	@Override
-	public Secteur modifierMetierSecteur(String nom, String lienCarte, String acces, String description,
+	public Secteur modifierMetierSecteur(String nom, String lienCarte, String description,
 			Secteur secteur) {
 		secteur.setNom(nom);
 		secteur.setLienCarte(lienCarte);
-		secteur.setAcces(acces);
 		secteur.setDescription(description);
 		try {
 			secteur = daoSecteur.save(secteur);

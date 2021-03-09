@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.escalade.oc.beans.Commentaire;
+import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierCommentaire;
@@ -85,7 +87,38 @@ public class SiteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		HttpSession session = request.getSession();
+		Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
+		String type = request.getParameter("type");
 		
-
+		String idSite = request.getParameter("idSite");
+		Long siteId = Long.parseLong(idSite);
+		Site s=metierSite.trouverMetierSite(siteId);
+		if ("ajouterCommentaire".equals(type)) {
+		String commentaire = request.getParameter("commentaire");
+		
+		metierCommentaire.ajouterMetierCommentaire(commentaire, s, g);
+		
+		}
+		if ("supprimerCommentaire".equals(type)) {
+			
+			String idCommentaire = request.getParameter("idCommentaire");
+			Long commentaireId = Long.parseLong(idCommentaire);
+			Commentaire c=metierCommentaire.trouverMetierCommentaire(commentaireId);
+			metierCommentaire.supprimerMetierCommentaire(c);
+			
+			}
+		if ("modifierCommentaire".equals(type)) {
+			String commentaire = request.getParameter("commentaire");
+			String idCommentaire = request.getParameter("idCommentaire");
+			Long commentaireId = Long.parseLong(idCommentaire);
+			Commentaire c=metierCommentaire.trouverMetierCommentaire(commentaireId);
+			metierCommentaire.modifierMetierCommentaire(commentaire, c);
+			
+			}
+		
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		httpResponse.sendRedirect("/site?id="+idSite);
+		
 	}
 }

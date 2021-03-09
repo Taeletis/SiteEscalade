@@ -8,20 +8,23 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <jsp:include page="Menu.jsp"></jsp:include>
+<link 
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
 </head>
 
 <body>
 	<div class="container">
-	<div class="row">
-			
-			<div class="col">
-				<a class="btn btn-light" href="/site?id=${site.idSite}" role="button">revenir au site </a>
-			</div>
-		</div>
-
+	
 
 <div class="row">
-
+			<div class="col mb-3">
+				<a  href="/site?id=${site.idSite}" class="text-info"><i class="fa fa-arrow-left"></i>revenir au site </a>
+			</div>
+			
+		</div>
+<div class="row">
+<div class="table-responsive">
 <table class="table">
 									<thead class="thead-dark">
 										<tr>
@@ -30,8 +33,8 @@
 											<th scope="col">lieu</th>
 											<th scope="col">Date de parution</th>
 											<th scope="col">Créer par</th>
-											<th scope="col">disponibilité</th>
 											<th scope="col"></th>
+											
 
 									</thead>
 	<c:forEach items="${topos}" var="t">
@@ -50,9 +53,9 @@
 					<td>${t.lieu}</td>
 					<td>${t.dateParution}</td>
 					<td>${t.proprietaire.nom}</td>
-					<td> ${ t.disponible ? 'disponible' : 'indisponible' }</td>
+					<td> ${ t.disponible ? '<i class="fa fa-check-circle" style="color:green"></i>' : '<i class="fa fa-minus-circle" style="color:red"></i>' }
 				
-<td>
+
 		<c:choose>
 			<c:when test="${t.disponible}">
 				<form method="post" action="">
@@ -66,7 +69,7 @@
 				</form>
 				</c:when>
 				<c:otherwise>
-				<P>Vous ne pouvez pas reserver ce topo</P>
+				
 			</c:otherwise>
 		</c:choose>
 		</td>
@@ -75,6 +78,7 @@
 
 									</tbody>
 								</table>
+								</div>
 </div>
 </div>
 </body>

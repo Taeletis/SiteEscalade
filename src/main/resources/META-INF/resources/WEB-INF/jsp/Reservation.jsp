@@ -28,6 +28,7 @@
 			<div class="card mb-3 bg-light mr-3 border-success"> 
 				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">De : ${r.emprunteur.nom}</a>
 				<p>email : ${r.emprunteur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
 					<p>Statut : ${r.statut.statut}</p>
 				
          <form method="post" action="">
@@ -37,7 +38,7 @@
 </div>
 <div class="form-check form-check-inline">
   <input class="form-check-input" type="radio"  name="choix" id="refuser" value="refuser">
-  <label class="form-check-label" for="accepter">Refuser</label>
+  <label class="form-check-label" for="refuser">Refuser</label>
 </div>
 <input name="reservation" type="hidden" id="reservation" value="${r.idReservation}">
 <button type="submit" class="btn btn-success mb-1 mr-1">Valider</button>
@@ -57,6 +58,7 @@
 			<div class="card mb-3 mr-3 bg-light border-danger"> 
 				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">De : ${r.emprunteur.nom}</a>
 				<p>email : ${r.emprunteur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
 					<p>Statut : ${r.statut.statut}</p>
 				
          </div>
@@ -65,6 +67,7 @@
 			<div class="card mb-3 mr-3 bg-light border-info"> 
 				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">De : ${r.emprunteur.nom}</a>
 				<p>email : ${r.emprunteur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
 					<p>Statut : ${r.statut.statut}</p>
 				
          </div>

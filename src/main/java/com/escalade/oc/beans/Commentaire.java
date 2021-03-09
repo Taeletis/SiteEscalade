@@ -88,5 +88,13 @@ public class Commentaire implements Serializable {
 	public void setAuteur(Grimpeur auteur) {
 		this.auteur = auteur;
 	}
+
+	public long getIdCommentaire() {
+		return idCommentaire;
+	}
+
+	public void setIdCommentaire(long idCommentaire) {
+		this.idCommentaire = idCommentaire;
+	}
 	
 }

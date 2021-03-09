@@ -10,31 +10,82 @@
 <title>Connexion</title>
 </head>
 <body style="background-color: #eeeeee">
- <ul>
- <li><form method="post" action="connexion">
-            <fieldset>
-                <legend>Connexion</legend>
+<div class="container">
+		<div class="jumbotron">
+			<h1>Bienvenue chez Les Amis de l'escalade</h1>
+		</div>
+	</div>
+ <div class="container">
+  <div class="row">
+    <div class="card bg-light"> 
+
+      </div>
+      </div>
+      </div>
+       <div class="container">
+      <div class="jumbotron">
+      <form method="post" action="">
+          
                 <p>Connectez-vous ici</p>
                
 
 
                 <label for="email">Adresse email <span class="requis">*</span></label>
                 <input type="email" id="email" name="email" value="" size="20" maxlength="60" />
-                <br />
+             
 
                 <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
                 <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
  
-                <br />
-				 <input name="action2" type="hidden" value="connexion">
-       			 <input type="submit" value="Connexion" class="sansLabel" />
-       			
-                <br />
-                
-            </fieldset>
+               
+				 <input name="action" type="hidden" value="connexion">
+       			 
+       			<button type="submit" class="btn btn-dark">Connexion</button>
+             
+           
         </form>
-        </li>
-        </ul>
+			<hr/>
+			<form method="post" action="">
         
+                <p>Vous pouvez vous inscrire via ce formulaire.</p>
+                
+                  <label for="nom">Nom<span class="requis">*</span></label>
+                <input type="text" id="nom" name="nom" value="" size="20" maxlength="20" />
+            
+                
+                <label for="nom">Prenom<span class="requis">*</span></label>
+                <input type="text" id="prenom" name="prenom" value="" size="20" maxlength="20" />
+  
+
+                <label for="email">Adresse email <span class="requis">*</span></label>
+                <input type="email" id="email" name="email" value="" size="20" maxlength="60" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
+         
+
+                <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
+                <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
+ 
+            
+                <label for="confirmation">Confirmation du mot de passe <span class="requis">*</span></label>
+                <input type="password" id="confirmation" name="confirmation" value="" size="20" maxlength="20" />
+             
+
+              	<input name="action" type="hidden" value="inscription">
+
+                
+       			<button type="submit" class="btn btn-dark">Inscription</button>
+             
+                
+           
+        </form>
+		</div>
+		</div>
+       <div class="container">
+      <div class="row"> 
+      <div class="card bg-light"> 
+
+       </div>
+      </div>
+     
+        </div>
 </body>
 </html>

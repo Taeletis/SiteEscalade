@@ -62,8 +62,8 @@ public class ReservationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		String choix = request.getParameter("email");
+		try {
+		String choix = request.getParameter("choix");
 		String idResa = request.getParameter("reservation");
 		Long resaId = Long.parseLong(idResa);
 		Reservation r=metierReservation.trouverMetierReservation(resaId);
@@ -98,7 +98,7 @@ public class ReservationServlet extends HttpServlet {
 		session.setAttribute("resa",list);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Reservation.jsp").forward(request, response);
 			
-			
+		}catch (Exception e) {}
 
 		
 

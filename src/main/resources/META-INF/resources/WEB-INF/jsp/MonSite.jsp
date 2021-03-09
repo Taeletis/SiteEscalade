@@ -4,10 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
+<link 
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
 <jsp:include page="Menu.jsp"></jsp:include>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -16,6 +20,9 @@
 <body>
 
 	<div class="container">
+<div class="row ">
+<a href="/mesSites" class="text-info"><i class="fa fa-arrow-left"></i>revenir a la liste de mes sites</a>
+</div>
 <div class="row ">
 <div class="card">
 		
@@ -47,7 +54,7 @@
 					<c:forEach items="${secteurs}" var="nav">
 						<c:forEach items="${nav.key}" var="navS">
 
-							<a class="nav-item nav-link mb-2" id="Secteur${navS.key.idSecteur}-tab" data-toggle="tab"
+							<a class=" nav-link  mb-2" id="Secteur${navS.key.idSecteur}-tab" data-toggle="tab"
 								href="#Secteur${navS.key.idSecteur}" role="tab" aria-controls="Secteur${navS.key.idSecteur}"
 								aria-selected="false">${navS.key.nom}</a>
 
@@ -109,15 +116,48 @@
 
 
 
-								<p>${s1.key.nom}</p>
+								<p>${s1.key.nom}<button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerSecteur${s1.key.idSecteur}"><i class="fa fa-times-circle" style="color:red"></i></button></p>
+										<div class="modal fade" id="supprimerSecteur${s1.key.idSecteur}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerSecteur${s1.key.idSecteur}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="supprimerSecteur${s1.key.idSecteur}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idSecteur" type="hidden" id="supprimerSecteur${s1.key.idSecteur}" value="${s1.key.idSecteur}">
+<input type="hidden" name="type" id="type" value="supprimerSecteur" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 								<p>${s1.key.description}</p>
 								<p>
-									<img src="${s1.key.lienCarte}">
+									<img src="${pageContext.request.contextPath}${s1.key.lienCarte}" class="img-fluid"/>
 								</p>
-								<p>${s1.value}</p>
+								<p>${s1.value} <button type="button" class="btn btn-warning" data-toggle="modal"
+									data-target="#mofifierSecteur${s1.key.idSecteur}" ><i class="fa fa-edit"></i></button></p>
 								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-warning" data-toggle="modal"
-									data-target="#mofifierSecteur${s1.key.idSecteur}">modifier secteur</button>
+								
 
 								<!-- Modal -->
 								<div class="modal fade" id="mofifierSecteur${s1.key.idSecteur}" tabindex="-1" role="dialog"
@@ -130,7 +170,7 @@
 													<span aria-hidden="true">&times;</span>
 												</button>
 											</div>
-											<form method="post" action="">
+											<form method="post" action="" enctype="multipart/form-data">
 												<div class="modal-body">
 
 
@@ -142,7 +182,7 @@
 														for="description">description<span class="requis">*</span></label> <input type="text"
 														id="description" name="description" value="${s1.key.description}" size="20"
 														maxlength="60" /> <br /> <label for="carte">carte</label> <input type="checkbox"
-														id="modfierImage" name="modfierImage"> <label for="modfierImage">modifierImage</label>
+														id="modifierImage" name="modifierImage"> <label for="modfierImage">modifierImage</label>
 													<input type="file" name="carte" id="carte" value="" /> <input type="hidden"
 														name="type" id="type" value="modifierSecteur" /> <input type="hidden"
 														name="idSecteur" id="idSecteur" value="${s1.key.idSecteur}" />
@@ -192,7 +232,40 @@
 											
 
 
-												<p>${v.key.nom}</p>
+												<p>${v.key.nom}<button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerVoie${v.key.idVoie}"><i class="fa fa-times-circle" style="color:red"></i></button></p>
+										<div class="modal fade" id="supprimerVoie${v.key.idVoie}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerVoie${v.key.idVoie}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="supprimerVoie${v.key.idVoie}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idVoie" type="hidden" id="supprimerVoie${v.key.idVoie}" value="${v.key.idVoie}">
+<input type="hidden" name="type" id="type" value="supprimerVoie" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 												<p>${v.key.annotation}</p>
 												<p>
 													Cotation: ${v.value}
@@ -200,7 +273,7 @@
 
 													<!-- Button trigger modal -->
 													<button type="button" class="btn btn-primary" data-toggle="modal"
-														data-target="#modifierVoie${v.key.idVoie}">modifier</button>
+														data-target="#modifierVoie${v.key.idVoie}"><i class="fa fa-edit"></i></button>
 												</p>
 												<!-- Modal -->
 												<div class="modal fade" id="modifierVoie${v.key.idVoie}" tabindex="-1" role="dialog"
@@ -265,8 +338,8 @@
 
 
 																	<button type="button" class="btn btn-primary" data-toggle="modal"
-																		data-target="#mofifier${l.idLongueur}">modifier longueur</button> <!-- Modal -->
-																	<div class="modal fade" id="mofifier${l.idLongueur}" tabindex="-1" role="dialog"
+																		data-target="#modifier${l.idLongueur}"><i class="fa fa-edit"></i></button> <!-- Modal -->
+																	<div class="modal fade" id="modifier${l.idLongueur}" tabindex="-1" role="dialog"
 																		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 																		<div class="modal-dialog modal-dialog-centered" role="document">
 																			<div class="modal-content">
@@ -299,6 +372,40 @@
 																			</div>
 																		</div>
 																	</div>
+																	<button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerLongueur${l.idLongueur}"><i class="fa fa-times-circle" style="color:red"></i></button>
+										<div class="modal fade" id="supprimerLongueur${l.idLongueur}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerLongueur${l.idLongueur}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="supprimerLongueur${l.idLongueur}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idLongueur" type="hidden" id="supprimerLongueur${l.idLongueur}" value="${l.idLongueur}">
+<input type="hidden" name="type" id="type" value="supprimerLongueur" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 																</td>
 
 															</tr>
@@ -324,10 +431,10 @@
 
 
 																					<label for="hauteur">hauteur de la Longueur<span class="requis">*</span></label>
-																					<input type="text" id="hauteur" name="hauteur" value="" size="20"
-																						maxlength="60" /> <br /> <label for="cotation">cotation<span
+																					<input type="text" id="hauteur" name="hauteur" value="" required pattern="[0-9]{1,3}"/><br />
+																					<label for="cotation">cotation<span
 																						class="requis">*</span></label> <input type="text" id="cotation" name="cotation"
-																						value="" size="20" maxlength="60" /> <br /> <input type="hidden"
+																						value="" required pattern="[1-9][A-C]"/> <br /> <input type="hidden"
 																						name="idVoie" id="idVoie" value="${v.key.idVoie}" /><br /> <input
 																						type="hidden" name="type" id="type" value="longueur" /><br /> <br />
 
@@ -408,15 +515,15 @@
 
 
 	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
-
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
 </body>
 </html>

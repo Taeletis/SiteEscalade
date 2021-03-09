@@ -26,7 +26,6 @@ public class Secteur implements Serializable {
 	private Long idSecteur;
 	private String nom;	
 	private String lienCarte;
-	private String acces;
 	private String description;
 	@ManyToOne
 	@JoinColumn(name = "ID_SITE")
@@ -37,10 +36,9 @@ public class Secteur implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Secteur(String nom, String acces,String lienCarte, String description, Site site) {
+	public Secteur(String nom,String lienCarte, String description, Site site) {
 		super();
 		this.nom = nom;
-		this.acces = acces;
 		this.lienCarte=lienCarte;
 		this.description = description;
 		this.site = site;
@@ -63,12 +61,7 @@ public class Secteur implements Serializable {
 	public void setLienCarte(String lienCarte) {
 		this.lienCarte = lienCarte;
 	}
-	public String getAcces() {
-		return acces;
-	}
-	public void setAcces(String acces) {
-		this.acces = acces;
-	}
+	
 	public String getDescription() {
 		return description;
 	}

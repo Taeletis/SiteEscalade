@@ -59,13 +59,11 @@ public class SecteurServlet extends HttpServlet {
 		 	voies.addAll(metierVoie.listeParSecteurMetierVoie(secteur));
 	
 		 	HashMap<Voie,String> h= new HashMap <Voie,String>();
-		 	System.out.println("camarche");
 		 	Iterator it= voies.iterator();
 		 	while(it.hasNext()) {
 				Voie v=(Voie)it.next();
 				String cotation="";
 				cotation=metierVoie.cotationMetierVoie(v);
-				System.out.println(v.getNom()+cotation) ;
 				 h.put(v,cotation);
 		 	}
 		 	
@@ -75,7 +73,6 @@ public class SecteurServlet extends HttpServlet {
 				Voie v=(Voie)it.next();
 				String cotation="";
 				 cotation=h.get(v);
-				System.out.println(v.getNom()+cotation) ;
 				HashMap<Voie,String>h3= new HashMap <Voie,String>();
 				
 		 		List<Longueur> l=metierLongueur.listeParVoieMetierLongueur(v);

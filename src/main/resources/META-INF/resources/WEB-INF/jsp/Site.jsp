@@ -6,6 +6,14 @@
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <jsp:include page="Menu.jsp"></jsp:include>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+
+<link 
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
 </head>
 
 <body>
@@ -13,11 +21,10 @@
 	<div class="container">
 		<div class="row">
 
-			<a href="/recherche" class="text-info"><=revenir a la liste des sites</a>
+			<a href="/recherche" class="text-info"><i class="fa fa-arrow-left"></i>revenir a la liste des sites</a>
 		</div>
 
 
-	</div>
 	</div>
 	<div class="container">
 		<div class="row">
@@ -78,8 +85,8 @@
 			<div class="row">
 
 				<div class="col">
-					<button type="button" class="btn btn-info" data-toggle="modal"
-						data-target="#ajouterCommentaire">ajouter un Commentaire</button>
+					<h5>Commentaires<button type="button" class="btn btn-info ml-2" data-toggle="modal"
+						data-target="#ajouterCommentaire"><i class="fa fa-plus-circle"></i></button></h5>
 
 					<!-- Modal -->
 					<div class="modal fade" id="ajouterCommentaire" tabindex="-1" role="dialog"
@@ -97,9 +104,9 @@
 
 
 										<label for="FormControlTextarea">Commentaire<span class="requis">*</span></label>
-										<textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
-										<br /> <input type="hidden" name="site" id="site" value="${site.idSite}" /><br /> <br />
-
+										<textarea class="form-control" id="exampleFormControlTextarea1"name="commentaire" rows="5"></textarea>
+										<br /> <input type="hidden" name="idSite" id="site" value="${site.idSite}" /><br /> <br />
+												<input type="hidden" name="type" id="type" value="ajouterCommentaire" />
 
 									</div>
 									<div class="modal-footer">
@@ -112,13 +119,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<h5>Commentaires</h5>
-				</div>
-			</div>
+			
 
 			<c:forEach items="${commentaires}" var="c">
+			
 				<div class="row">
 					<div class="card">
 
@@ -127,8 +131,74 @@
 							<p class="card-text">
 								<small class="text-muted">Créer le ${c.dateParution} modifié le
 									${c.dateModification} par ${c.auteur.nom}</small>
-							</p>
+							<c:if test="${c.auteur.idGrimpeur == grimpeur.idGrimpeur || grimpeur.membre}"><button type="button" class="btn" data-toggle="modal"
+											data-target="#modifierCommentaire${c.idCommentaire}"><i class="fa fa-edit" style="color:orange"></i></button>
+										<div class="modal fade" id="modifierCommentaire${c.idCommentaire}" tabindex="-1" role="dialog"
+											aria-labelledby="modifierCommentaire${c.idCommentaire}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="#modifierCommentaire${c.idCommentaire}LongTitle">modifier</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
 
+														<div class="modal-body">
+  
+  <textarea class="form-control" id="exampleFormControlTextarea1"name="commentaire" rows="5" >${c.description}</textarea>
+
+
+<input name="idCommentaire" type="hidden" id="modifierCommentaire${c.idCommentaire}" value="${c.idCommentaire}">
+<input type="hidden" name="type" id="type" value="modifierCommentaire" />
+<input type="hidden" name="idSite" id="site" value="${site.idSite}" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div><button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerCommentaire${c.idCommentaire}"><i class="fa fa-times-circle" style="color:red"></i></button>
+										<div class="modal fade" id="supprimerCommentaire${c.idCommentaire}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerCommentaire${c.idCommentaire}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="#supprimerCommentaire${c.idCommentaire}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idCommentaire" type="hidden" id="supprimerCommentaire${c.idCommentaire}" value="${c.idCommentaire}">
+<input type="hidden" name="type" id="type" value="supprimerCommentaire" />
+<input type="hidden" name="idSite" id="site" value="${site.idSite}" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div></c:if></p>
 						</div>
 					</div>
 				</div>
@@ -137,6 +207,16 @@
 		</div>
 
 	</div>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 </body>
 </html>

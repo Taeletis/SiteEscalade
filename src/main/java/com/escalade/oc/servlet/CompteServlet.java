@@ -1,9 +1,17 @@
 package com.escalade.oc.servlet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Properties;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -80,10 +88,10 @@ public class CompteServlet extends HttpServlet {
 				if (motDePasse.equals(confirmation)) {
 
 					if (!metierGrimpeur.verifierInscriptionMetierGrimpeur(email)||g.getEmail().equals(email)) {
-
-						metierGrimpeur.modifierMetierGrimpeur(nom, prenom, email, motDePasse,g);
+						String cryptedMdp =securite	(motDePasse);	
+						metierGrimpeur.modifierMetierGrimpeur(nom, prenom, email, cryptedMdp,g);
 						System.out.println("inscription");
-						this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request,
+						this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Compte.jsp").forward(request,
 								response);
 
 					} else {
@@ -101,5 +109,47 @@ public class CompteServlet extends HttpServlet {
 			}
 
 		}
+	}
+	public  String securite(String motDePasse) {
+		
+		try {
+			String cryptedMdp="";
+			KeyGenerator k;
+			k = KeyGenerator.getInstance("AES");
+			Properties prop = new Properties();
+			String projectPath = System.getProperty("user.dir");
+			InputStream input = new FileInputStream(projectPath + "/src/main/resources/config.properties");
+			prop.load(input);
+			String key=prop.getProperty("key");
+			SecretKey sk;
+			if("".equals(key)) {
+		
+				sk= k.generateKey();
+				String encodedKey = Base64.getEncoder().encodeToString(sk.getEncoded());
+				System.out.println(encodedKey);
+				prop.setProperty("key", encodedKey);
+				System.out.println(prop.getProperty("key"));
+			}
+		else {
+		
+		byte[] decodedKey = Base64.getDecoder().decode(prop.getProperty("key"));
+		sk = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+			}
+			Cipher cipher=Cipher.getInstance("AES");
+			byte[] text=motDePasse.getBytes("UTF-8");
+			cipher.init(Cipher.ENCRYPT_MODE, sk);
+			byte[] textCrypted=cipher.doFinal(text);
+			cryptedMdp=new String(textCrypted);
+			System.out.println(cryptedMdp);	
+			
+			
+			return cryptedMdp;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+			return null;
+		} 
+		
 	}
 }

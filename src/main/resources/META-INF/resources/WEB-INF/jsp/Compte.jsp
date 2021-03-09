@@ -90,19 +90,60 @@
 								</div>
 	</div>
 								</div>
-	
-			<div class="container">
+									
+		</div>
+				<div class="container">
 			<div class="row">
+			
 		<c:forEach items="${Reservations}" var="r">
-		
-				<a href="/secteur?id=${r.idReservation}">${r.emprunteur.nom}</a>
-					<p>${r.statut.statut}</p>
-				
+		<c:choose>
+         
+         <c:when test = "${r.statut.idStatut==1}">
+			<div class="card mb-3 bg-light mr-3 border-success"> 
+				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">Avec : ${r.topo.site.createur.nom}</a>
+				<p>email : ${r.topo.site.createur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
+					<p>Statut : ${r.statut.statut}</p>
+		</div>
+         </c:when>
+         </c:choose>
 				
 			</c:forEach>
+			</div>
+			<div class="container">		
+				<div class="row">
+			
+		<c:forEach items="${Reservations}" var="r">
+		<c:choose>
+         
+         <c:when test = "${r.statut.idStatut==2}">
+			<div class="card mb-3 mr-3 bg-light border-danger"> 
+				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">Avec : ${r.topo.site.createur.nom}</a>
+				<p>email : ${r.topo.site.createur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
+					<p>Statut : ${r.statut.statut}</p>
+				
+         </div>
+         </c:when>
+          <c:when test = "${r.statut.idStatut==3}">
+			<div class="card mb-3 mr-3 bg-light border-info"> 
+				<a href="/grimpeur?id=${r.emprunteur.idGrimpeur}">Avec : ${r.topo.site.createur.nom}</a>
+				<p>email : ${r.topo.site.createur.email}</p>
+				<p>Pour : ${r.topo.nom}</p>
+					<p>Statut : ${r.statut.statut}</p>
+				
+         </div>
+         </c:when>
+         </c:choose>
+					
+			
+			</c:forEach>
+		
+		</div>
+		
 		</div>
 		</div>
-		</div>
+		
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>

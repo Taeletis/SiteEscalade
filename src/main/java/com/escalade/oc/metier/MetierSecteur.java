@@ -9,8 +9,8 @@ import com.escalade.oc.beans.Site;
 
 public interface MetierSecteur {
 
-	public Secteur ajouterMetierSecteur(String nom,String lienCarte,String acces,String description,Site s);
-	public Secteur modifierMetierSecteur(String nom,String lienCarte,String acces,String description, Secteur secteur);
+	public Secteur ajouterMetierSecteur(String nom,String lienCarte,String description,Site s);
+	public Secteur modifierMetierSecteur(String nom,String lienCarte,String description, Secteur secteur);
 	public Secteur trouverMetierSecteur(Long id);
 	public void supprimerMetierSecteur(Secteur secteur);
 	public List<Secteur> listeParSiteMetierSecteur(Site s);

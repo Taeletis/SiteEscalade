@@ -44,11 +44,21 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 	@Override
 	public Commentaire trouverMetierCommentaire(Long id) {
 		Commentaire c=null;
+		List<Commentaire> list = new ArrayList<Commentaire>();
 		try {
-			c=daoCommentaire.getOne(id);
-		}catch (Exception e) {
-		}
-		return c;
+			list = daoCommentaire.findAll();
+			for (int i = 0; i < list.size(); i++) {
+				c = list.get(i);
+				Long idCommentaire = c.getIdCommentaire();
+				if (idCommentaire == id) {
+					break;
+				}
+
+			}
+		
+	}catch (Exception e) {
+	}
+	return c;
 	}
 
 	@Override

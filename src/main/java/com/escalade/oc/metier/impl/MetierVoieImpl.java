@@ -119,7 +119,6 @@ public class MetierVoieImpl implements MetierVoie {
 			}
 
 		}
-		System.out.println(cotation);
 		return cotation;
 	}
 }

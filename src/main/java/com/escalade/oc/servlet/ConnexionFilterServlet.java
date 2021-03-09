@@ -1,7 +1,6 @@
 package com.escalade.oc.servlet;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/recherche", "/site","/secteur","/topo" })
+@WebFilter(urlPatterns = { "/recherche", "/site","/secteur","/topo","/compte","/mesSites","/monSite","/reservation","/deconnexion","/grimpeur","/WEB-INF/jsp/Acceuil.jsp"})
 public class ConnexionFilterServlet implements Filter {
 
 	@Override

@@ -25,17 +25,22 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarContent">
-					<ul class="navbar-nav">
-						<li class="nav-item active"><a class="nav-link"
-							href="/connexion">Connexion</a></li>
+					<ul class="navbar-nav mr-auto">
+						
 						<li class="nav-item"><a class="nav-link" href="/compte">Mon
-								Profil</a></li>
+								Profil <c:if test="${ enAttente > 0}" var="mesResa" scope="session"><span class="badge badge-light">
+    ${enAttente}</span></c:if></a></li>
 						<li class="nav-item"><a class="nav-link" href="/mesSites">Mes
 								Sites</a></li>
 								<li class="nav-item"><a class="nav-link" href="/reservation">Mes
 								Notifications <c:if test="${ notif > 0}" var="maVariable" scope="session"><span class="badge badge-light">
     ${notif}</span></c:if></a></li>
+   
 					</ul>
+					<div class="navbar-nav">
+					<a class="nav-link outline"
+							href="/deconnexion">Deconnexion</a>
+					</div>
 				</div>
 			
 				

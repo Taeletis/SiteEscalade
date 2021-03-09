@@ -11,35 +11,30 @@
 </head>
 
 <body>
-	Bienvenu ${grimpeur.nom}
-	</br>
-	</br>
-	</br>
-	</br>
+	<div class="container">
+		
+		<div class="row">
 
-	</br>
-	</br>
-	===================================================================================================================
-	</br>
-	</br>
+			<div class="col">
+			
+			<h5>
+					Profil du Grimpeur
+				</h5>
+				<p>
+					Nom : ${g.nom}
+				</p>
+		
+				<p>Prénom : ${g.prenom}</p>
+			
+				<p>Statut : ${ g.membre ? 'admin' : 'membre' }</p>
 
-		<div>
-			<table>
-				<tr>
-					<td>${g.nom}</td>
-					<td>${g.prenom}</td>
-					<td> ${ g.membre ? 'admin' : 'membre' }</td>
-					<td>${g.email}</td>
-					<th><form method="post" action="">
-					<input type="hidden" name="grimpeur" id="grimpeur" value="${g.nom}" />
-					 <input type="submit" value="liste des sites" class="sansLabel" /> </form></th>
-					
-				</tr>
-
-			</table>
-		</div>
+				<p>Email : ${g.email}</p>
+			</div>
+	</div>
+		
 	
-
+</div>
+		
 
 </body>
 </html>

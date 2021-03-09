@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
+	<link 
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
 <title>Insert title here</title>
 
 </head>
@@ -44,7 +47,7 @@
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
-								<form method="post" action="">
+								<form method="post" action="" enctype="multipart/form-data">
 									<div class="modal-body">
 
 
@@ -80,10 +83,42 @@
 
 
 							<h4>
-								<a href="/monSite?id=${s.key.idSite}">${s.key.nom}</a>
-							</h4
-							>
+								<a href="/monSite?id=${s.key.idSite}">${s.key.nom}</a><button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerSite${s.key.idSite}"><i class="fa fa-times-circle" style="color:red"></i></button>
+							</h4>
 
+										<div class="modal fade" id="supprimerSite${s.key.idSite}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerSite${s.key.idSite}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="#supprimerSite${s.key.idSite}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idSite" type="hidden" id="idSiteSupprimer" value="${s.key.idSite}">
+<input type="hidden" name="type" id="type" value="supprimerSite" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider le choix</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 							<p>
 								<a href="/monSite?id=${s.key.idSite}"><img src="${s.key.lienImage}" width="200"
 									height="150"></a>
@@ -92,7 +127,7 @@
 							<!-- Button trigger modal -->
 							<p>
 								<button type="button" class="btn btn-warning" data-toggle="modal"
-									data-target="#modifierSite">Modifer</button>
+									data-target="#modifierSite"><i class="fa fa-edit"></i></button>
 							</p>
 
 
@@ -107,7 +142,7 @@
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-										<form method="post" action="">
+										<form method="post" action="" enctype="multipart/form-data">
 											<div class="modal-body">
 
 												<label for="nom">nom du site<span class="requis">*</span></label> <input type="text"
@@ -190,12 +225,45 @@
 										aria-labelledby="Topo${t.idTopo}-tab">
 
 
-										<p>Nom : ${t.nom}</p>
+										<p>Nom : ${t.nom}<button type="button" class="btn" data-toggle="modal"
+											data-target="#supprimerTopo${t.idTopo}"><i class="fa fa-times-circle" style="color:red"></i></button></p>
+										<div class="modal fade" id="supprimerTopo${t.idTopo}" tabindex="-1" role="dialog"
+											aria-labelledby="supprimerTopo${t.idTopo}CenterTitle" aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="#supprimerTopo${t.idTopo}LongTitle">supprimer</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<form method="post" action="">
+
+														<div class="modal-body">
+  <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" name="supprimer" id="supprimer" value="supprimer">
+  <label class="form-check-label" for="supprimer">Cochez la case pour valider la supression</label>
+</div>
+
+<input name="idTopo" type="hidden" id="supprimerTopo${t.idTopo}" value="${t.idTopo}">
+<input type="hidden" name="type" id="type" value="supprimerTopo" />
+
+
+
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+															<button type="submit" class="btn btn-primary">valider</button>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 										<p>Lieu : ${t.lieu}</p>
 										<p>Créer le : ${t.dateParution}</p>
 										<p>${ t.disponible ? 'disponible' : 'indisponible' }</p>
-										<button type="button" class="btn btn-success" data-toggle="modal"
-											data-target="#modifierTopo${t.idTopo}">modifier</button>
+										<button type="button" class="btn btn-info" data-toggle="modal"
+											data-target="#modifierTopo${t.idTopo}"><i class="fa fa-edit"></i></button>
 										<div class="modal fade" id="modifierTopo${t.idTopo}" tabindex="-1" role="dialog"
 											aria-labelledby="modifierTopo${t.idTopo}lCenterTitle" aria-hidden="true">
 											<div class="modal-dialog modal-dialog-centered" role="document">
@@ -245,14 +313,16 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"></script>
+
 </body>
 </html>

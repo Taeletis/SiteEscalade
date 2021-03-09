@@ -102,7 +102,6 @@ public  class MetierReservationImpl implements MetierReservation{
 		
 				for (int i = 0; i < list.size(); i++) {
 					r = list.get(i);
-					System.out.println(g.getIdGrimpeur()+"//"+r.getEmprunteur().getIdGrimpeur());
 					if (g.getIdGrimpeur().equals(r.getEmprunteur().getIdGrimpeur())) {
 						listReturn.add(r);
 					}
