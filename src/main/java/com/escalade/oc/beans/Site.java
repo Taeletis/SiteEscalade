@@ -12,12 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * Entité Secteur.
+ *
+ * @author Taeletis
+ * 
+ * 
+ *
+ */
 @Entity
 public class Site implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -2808352874097614557L;
 	@Id
 	@GeneratedValue
@@ -42,13 +48,24 @@ public class Site implements Serializable {
 	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
 	private Collection<Topo> topo;
 
-	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY) // private
-	Collection<Commentaire> commentaires;
+	@OneToMany(mappedBy = "site", fetch = FetchType.LAZY) 
+	private	Collection<Commentaire> commentaires;
 
 	public Site() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * Constructeur d'un Site.
+	 * @param nom
+	 * 		String nom du site.
+	 * @param lienImage
+	 * 		String lien url de l'image du site.
+	 * @param lieu
+	 * 		String lieu du site.
+	 * @param createur
+	 * 		Grimpeur créatuer du site.
+	 */
 	public Site(String nom, String lienImage,String lieu,Grimpeur createur) {
 		super();
 		this.nom = nom;

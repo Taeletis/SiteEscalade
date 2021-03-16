@@ -9,31 +9,66 @@ import org.springframework.stereotype.Service;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.Voie;
+import com.escalade.oc.dao.DaoReservation;
 import com.escalade.oc.dao.DaoSecteur;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierVoie;
 
+/**
+ * Class pour la couche metier de Secteur.
+ * @author Taeletis
+ * 
+ *         
+ */
 @Service
 public class MetierSecteurImpl implements MetierSecteur {
+	/**
+	 * injection de DaoSecteur.
+	 */
 	@Autowired
 	private DaoSecteur daoSecteur;
-
+	/**
+	 * injection de MetierVoie.
+	 */
 	@Autowired
 	private MetierVoie metierVoie;
-
+	/**
+	 * Méthode qui ajoute un Secteur.
+	 * @param nom
+	 * 		String nom du Secteur.
+	 * @param lienCarte
+	 * 		String lien url de l'image du Secteur.
+	 * @param description
+	 * 		String description du Secteur.
+	 * @param s
+	 * 		Site auquel appartient le Secteur.
+	 * @return
+	 * 		renvoie le Secteur créer.
+	 */
 	@Override
 	public Secteur ajouterMetierSecteur(String nom, String lienCarte, String description, Site s) {
-		Secteur secteur = new Secteur(nom , lienCarte, description, s);
+		Secteur secteur = new Secteur(nom, lienCarte, description, s);
 		try {
 			secteur = daoSecteur.save(secteur);
 		} catch (Exception e) {
 		}
 		return secteur;
 	}
-
+	/**
+	 * Méthode qui modifie un Secteur.
+	 * @param nom
+	 * 		String nom du Secteur.
+	 * @param lienCarte
+	 * 		String lien url de l'image du Secteur.
+	 * @param description
+	 * 		String description du Secteur.
+	 * @param secteur
+	 * 		Secteur à modifier.
+	 * @return
+	 * 		renvoie le Secteur modifié.
+	 */
 	@Override
-	public Secteur modifierMetierSecteur(String nom, String lienCarte, String description,
-			Secteur secteur) {
+	public Secteur modifierMetierSecteur(String nom, String lienCarte, String description, Secteur secteur) {
 		secteur.setNom(nom);
 		secteur.setLienCarte(lienCarte);
 		secteur.setDescription(description);
@@ -41,9 +76,16 @@ public class MetierSecteurImpl implements MetierSecteur {
 			secteur = daoSecteur.save(secteur);
 		} catch (Exception e) {
 		}
+
 		return secteur;
 	}
-
+	/**
+	 * Méthode qui trouve un Secteur.
+	 * @param id
+	 * 		Long id du Secteur.
+	 * @return
+	 * 		renvoie le Secteur trouvé.
+	 */
 	@Override
 	public Secteur trouverMetierSecteur(Long id) {
 		Secteur secteur = null;
@@ -58,18 +100,16 @@ public class MetierSecteurImpl implements MetierSecteur {
 				}
 
 			}
-			/*
-			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
-			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
-			 * 
-			 * }
-			 */
 		} catch (Exception e) {
 
 		}
 		return secteur;
 	}
-
+	/**
+	 *  Méthode qui supprime un Secteur.
+	 * @param secteur
+	 * 		Secteur à supprimer.
+	 */
 	@Override
 	public void supprimerMetierSecteur(Secteur secteur) {
 		try {
@@ -78,7 +118,13 @@ public class MetierSecteurImpl implements MetierSecteur {
 		}
 		;
 	}
-
+	/**
+	 * Méthode qui trouve les Secteur par Site.
+	 * @param s
+	 * 		Site en paramètre de recherche.
+	 * @return
+	 * renvoie une liste de Secteur appartenant au même Site.
+	 */
 	@Override
 	public List<Secteur> listeParSiteMetierSecteur(Site s) {
 		List<Secteur> list;
@@ -97,8 +143,13 @@ public class MetierSecteurImpl implements MetierSecteur {
 		}
 		return listReturn;
 	}
-
-	@Override
+	/**
+	 * Méthode qui retourne la cotation de la Voie.
+	 * @param s
+	 * 		Secteur demandé.
+	 * @return
+	 * 		renvoie la cotation du secteur.
+	 */
 	public String cotationMetierSecteur(Secteur s) {
 		List<Voie> list = metierVoie.listeParSecteurMetierVoie(s);
 
@@ -106,28 +157,28 @@ public class MetierSecteurImpl implements MetierSecteur {
 		int valeur;
 		int valeurHaute = 0;
 		String niveau = "A";
-		
+
 		for (int i = 0; i < list.size(); i++) {
 			Voie v = list.get(i);
 			String cotationVoie = metierVoie.cotationMetierVoie(v);
-			if(cotationVoie.length()==2) {
-			String chiffre=cotationVoie.substring(0,1);
-			valeur = Integer.parseInt(chiffre);
-			if (valeurHaute < valeur) {
-				String lettre = cotationVoie.substring(1);
-				valeurHaute = valeur;
-				cotation = valeurHaute + lettre;
-			}
-			if (valeurHaute == valeur) {
-				String lettre = cotationVoie.substring(1);
-				if (!niveau.equals(lettre)) {
-					if (lettre.equals("B") && niveau.equals("A") || lettre.equals("C") && niveau.equals("A")
-							|| lettre.equals("C") && niveau.equals("B")) {
-						cotation = valeurHaute + lettre;
-						niveau=lettre;
+			if (cotationVoie.length() == 2) {
+				String chiffre = cotationVoie.substring(0, 1);
+				valeur = Integer.parseInt(chiffre);
+				if (valeurHaute < valeur) {
+					String lettre = cotationVoie.substring(1);
+					valeurHaute = valeur;
+					cotation = valeurHaute + lettre;
+				}
+				if (valeurHaute == valeur) {
+					String lettre = cotationVoie.substring(1);
+					if (!niveau.equals(lettre)) {
+						if (lettre.equals("B") && niveau.equals("A") || lettre.equals("C") && niveau.equals("A")
+								|| lettre.equals("C") && niveau.equals("B")) {
+							cotation = valeurHaute + lettre;
+							niveau = lettre;
+						}
 					}
 				}
-			}
 			}
 
 		}

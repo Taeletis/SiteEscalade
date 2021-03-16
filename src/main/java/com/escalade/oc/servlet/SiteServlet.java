@@ -3,7 +3,6 @@ package com.escalade.oc.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,17 +19,30 @@ import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierCommentaire;
-import com.escalade.oc.metier.MetierReservation;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
+/**
+ * Servlet controlant la page d'information d'un site.
+ * @author Taeletis
+ *	
+ */
 
 @WebServlet(urlPatterns = "/site")
 public class SiteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierSecteur.
+	 */
 	@Autowired
 	private MetierSecteur metierSecteur;
+	/**
+	 * injection de MetierSite.
+	 */
 	@Autowired
 	private MetierSite metierSite;
+	/**
+	 * injection de MetierCommentaire.
+	 */
 	@Autowired
 	private MetierCommentaire metierCommentaire;
 	/**
@@ -42,6 +54,7 @@ public class SiteServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet qui permet l'envoi d'information sur les secteurs d'un site.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -49,7 +62,6 @@ public class SiteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-		 	HttpSession session = request.getSession();
 		 	
 		 	}
 			catch(Exception e) {
@@ -66,9 +78,8 @@ public class SiteServlet extends HttpServlet {
 		 	List<Secteur> l= new ArrayList <Secteur>();
 		 	l.addAll(metierSecteur.listeParSiteMetierSecteur(site));
 		 	HashMap<Secteur,String> h = new HashMap<Secteur,String>();
-		 	Iterator it= l.iterator();
-			while(it.hasNext()) {
-				Secteur s=(Secteur)it.next();
+
+			for(Secteur s : l) {
 				String cotation=metierSecteur.cotationMetierSecteur(s);
 				h.put(s,cotation);
 			}
@@ -81,6 +92,7 @@ public class SiteServlet extends HttpServlet {
 	}
 
 	/**
+	 * dopost qui permet l'ajout, la suppression ou la modification d'un commentaire.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -90,10 +102,20 @@ public class SiteServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
 		String type = request.getParameter("type");
-		
 		String idSite = request.getParameter("idSite");
 		Long siteId = Long.parseLong(idSite);
 		Site s=metierSite.trouverMetierSite(siteId);
+		if ("changerMention".equals(type)) {
+			
+			String choix = request.getParameter("choix");
+			boolean mention=false;
+			if("false".equals(choix))
+				mention =false;
+			if("true".equals(choix))
+				mention =true;
+			metierSite.modifierMentionMetierSite(s, mention);
+			}
+		
 		if ("ajouterCommentaire".equals(type)) {
 		String commentaire = request.getParameter("commentaire");
 		

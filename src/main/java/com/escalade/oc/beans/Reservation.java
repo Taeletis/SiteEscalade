@@ -9,13 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
+/**
+ * Entité Reservation.
+ * @author Taeletis
+ * 
+ *  
+ *
+ */
 @Entity
 public class Reservation implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -4015727598146474332L;
 
 	@Id
@@ -41,6 +45,21 @@ public class Reservation implements Serializable {
 		super(); // TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Constructeur d'une Reservation.
+	 * @param emprunteur
+	 * 		Grimpeur qui emprunte la reservation.
+	 * @param topo
+	 * 		Topo auquel appartient la reservation.
+	 * @param s
+	 * 		StatutType que le commentaire contient.
+	 */
+	public Reservation(Grimpeur emprunteur, Topo topo,StatutType s) {
+		super();
+		this.emprunteur = emprunteur;
+		this.topo = topo;
+		this.statut = s;
+	}
 	public long getIdReservation() {
 		return idReservation;
 	}
@@ -49,12 +68,7 @@ public class Reservation implements Serializable {
 		this.idReservation = idReservation;
 	}
 
-	public Reservation(Grimpeur emprunteur, Topo topo,StatutType s) {
-		super();
-		this.emprunteur = emprunteur;
-		this.topo = topo;
-		this.statut = s;
-	}
+	
 	public Grimpeur getEmprunteur() {
 		return emprunteur;
 	}

@@ -39,19 +39,31 @@ import com.escalade.oc.metier.MetierTopo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Servlet implementation class InscriptionServlet
+ *  Servlet controlant la page d'inscription et de connexion.
+ * @author Taeletis
  */
-@WebServlet(urlPatterns = "/connexion")
+
+@WebServlet(urlPatterns = "/connexion",loadOnStartup = 1)
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierGrimpeur.
+	 */
 	@Autowired
 	private MetierGrimpeur metierGrimpeur;
+	/**
+	 * injection de MetierSite.
+	 */
 	@Autowired
 	private MetierSite metierSite;
-
+	/**
+	 * injection de MetierTopo.
+	 */
 	@Autowired
 	private MetierTopo metierTopo;
-
+	/**
+	 * injection de MetierReservation.
+	 */
 	@Autowired
 	private MetierReservation metierReservation;
 
@@ -74,13 +86,14 @@ public class ConnexionServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost qui permet d'inscrire ou de connecter un utilisateur.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		if ("inscription".equals( request.getParameter("action"))) {
+		if ("inscription".equals(request.getParameter("action"))) {
 			String nom = request.getParameter("nom");
 			String prenom = request.getParameter("prenom");
 			String email = request.getParameter("email");
@@ -91,9 +104,8 @@ public class ConnexionServlet extends HttpServlet {
 				if (motDePasse.equals(confirmation)) {
 
 					if (!metierGrimpeur.verifierInscriptionMetierGrimpeur(email)) {
-						String cryptedMdp=securite(motDePasse);
+						String cryptedMdp = securite(motDePasse);
 						metierGrimpeur.ajouterMetierGrimpeur(nom, prenom, email, cryptedMdp);
-						System.out.println(cryptedMdp);
 						this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Connexion.jsp").forward(request,
 								response);
 
@@ -111,12 +123,12 @@ public class ConnexionServlet extends HttpServlet {
 
 			}
 		}
-		if ("connexion".equals( request.getParameter("action"))) {
+		if ("connexion".equals(request.getParameter("action"))) {
 			String email = request.getParameter("email");
 			String motDePasse = request.getParameter("motdepasse");
-			
-			String cryptedMdp=securite(motDePasse);
-			
+
+			String cryptedMdp = securite(motDePasse);
+
 			try {
 
 				if (metierGrimpeur.connexionMetierGrimpeur(email, cryptedMdp)) {
@@ -126,39 +138,8 @@ public class ConnexionServlet extends HttpServlet {
 					boolean connecter = true;
 					session.setAttribute("grimpeur", g);
 					session.setAttribute("connecter", connecter);
-					
-					
-					List<Site> list = metierSite.chercherParGrimpeurMetierSite(g);
-					List<Topo> list2 = new ArrayList<Topo>();
-					List<Reservation> list3 = new ArrayList<Reservation>();
-					for (Site s : list) {
-						list2.addAll(metierTopo.listeParSiteMetierTopo(s));
-					}
-					for (Topo t : list2) {
-						list3.addAll(metierReservation.listeParTopoMetierReservation(t));
-					}
+					initSession(session, g);
 
-					int notif = 0;
-					for (Reservation r : list3) {
-						StatutType s = r.getStatut();
-
-						if ("En attente de réponse".equals(s.getStatut()))
-							notif++;
-					}
-					session.setAttribute("notif", notif);
-					session.setAttribute("resa", list3);
-					List<Reservation> listResa = new ArrayList<Reservation>();
-					listResa.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
-
-					int enAttente = 0;
-					for (Reservation r : listResa) {
-						StatutType s = r.getStatut();
-
-						if ("En attente de réponse".equals(s.getStatut()))
-
-							enAttente++;
-					}
-					session.setAttribute("enAttente", enAttente);
 					this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Acceuil.jsp").forward(request,
 							response);
 				} else {
@@ -167,52 +148,93 @@ public class ConnexionServlet extends HttpServlet {
 				}
 
 			} catch (Exception e) {
-				System.out.println("truc");
 				e.printStackTrace();
 			}
 
 		}
 	}
-	public  String securite(String motDePasse) {
-		
+
+	/**
+	 * Methode qui permet de donner à la sesion les notifications necessaires.
+	 * 
+	 * @param session HttpSession
+	 * @param g       Grimpeur
+	 */
+	private void initSession(HttpSession session, Grimpeur g) {
+		List<Site> list = metierSite.chercherParGrimpeurMetierSite(g);
+		List<Topo> list2 = new ArrayList<Topo>();
+		List<Reservation> list3 = new ArrayList<Reservation>();
+		for (Site s : list) {
+			list2.addAll(metierTopo.listeParSiteMetierTopo(s));
+		}
+		for (Topo t : list2) {
+			list3.addAll(metierReservation.listeParTopoMetierReservation(t));
+		}
+
+		int notif = 0;
+		for (Reservation r : list3) {
+			StatutType s = r.getStatut();
+
+			if ("En attente de réponse".equals(s.getStatut()))
+				notif++;
+		}
+		session.setAttribute("notif", notif);
+		session.setAttribute("resa", list3);
+		List<Reservation> listResa = new ArrayList<Reservation>();
+		listResa.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
+
+		int enAttente = 0;
+		for (Reservation r : listResa) {
+			StatutType s = r.getStatut();
+
+			if ("En attente de réponse".equals(s.getStatut()))
+
+				enAttente++;
+		}
+		session.setAttribute("enAttente", enAttente);
+	}
+
+	/**
+	 * méthode qui crypte le mot de passe.
+	 * 
+	 * @param motDePasse mot de passe à crypter.
+	 * @return renvoie le mot de passe crypté.
+	 */
+	private String securite(String motDePasse) {
+
 		try {
-			String cryptedMdp="";
+			String cryptedMdp = "";
 			KeyGenerator k;
 			k = KeyGenerator.getInstance("AES");
 			Properties prop = new Properties();
 			String projectPath = System.getProperty("user.dir");
 			InputStream input = new FileInputStream(projectPath + "/src/main/resources/config.properties");
 			prop.load(input);
-			String key=prop.getProperty("key");
+			String key = prop.getProperty("key");
 			SecretKey sk;
-			if("".equals(key)) {
-		
-				sk= k.generateKey();
+			if ("".equals(key)) {
+
+				sk = k.generateKey();
 				String encodedKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-				System.out.println(encodedKey);
 				prop.setProperty("key", encodedKey);
-				System.out.println(prop.getProperty("key"));
+			} else {
+
+				byte[] decodedKey = Base64.getDecoder().decode(prop.getProperty("key"));
+				sk = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
 			}
-		else {
-		
-		byte[] decodedKey = Base64.getDecoder().decode(prop.getProperty("key"));
-		sk = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-			}
-			Cipher cipher=Cipher.getInstance("AES");
-			byte[] text=motDePasse.getBytes("UTF-8");
+			Cipher cipher = Cipher.getInstance("AES");
+			byte[] text = motDePasse.getBytes("UTF-8");
 			cipher.init(Cipher.ENCRYPT_MODE, sk);
-			byte[] textCrypted=cipher.doFinal(text);
-			cryptedMdp=new String(textCrypted);
-			System.out.println(cryptedMdp);	
-			
-			
+			byte[] textCrypted = cipher.doFinal(text);
+			cryptedMdp = new String(textCrypted);
+
 			return cryptedMdp;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			return null;
-		} 
-		
+		}
+
 	}
 }

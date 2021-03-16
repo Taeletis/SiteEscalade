@@ -10,12 +10,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ *  Entité StatutType.
+ *  énnumaration de statut.
+ * @author Taeletis
+ * 
+
+ *
+ */
 @Entity
 public class StatutType implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 2644924319011714878L;
 	@Id
 	@GeneratedValue
@@ -29,6 +35,11 @@ public class StatutType implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub }
 	}
+	/**
+	 * Constructeur d'un StatutType.
+	 * @param statut
+	 * 		String type de statut.
+	 */
 	public StatutType(String statut) {
 		super();
 		this.statut = statut;

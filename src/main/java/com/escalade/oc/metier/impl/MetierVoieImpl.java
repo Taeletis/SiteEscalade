@@ -12,15 +12,38 @@ import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoVoie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierVoie;
-
+/**
+ * Class pour la couche metier de Voie.
+ * @author Taeletis
+ * 
+ *         
+ *
+ */
 @Service
 public class MetierVoieImpl implements MetierVoie {
-
+	/**
+	 * injection de DaoVoie.
+	 */
 	@Autowired
 	private DaoVoie daoVoie;
+	/**
+	 * injection de MetierLongueur.
+	 */
 	@Autowired
 	private MetierLongueur metierLongueur;
 
+	
+	/**
+	 * Méthode qui ajoute une Voie.
+	 * @param nom
+	 * 		String nom de la Voie.
+	 * @param annotation
+	 * 		String description de la Voie.
+	 * @param s
+	 * 		Secteur auquel appartient la Voie.
+	 * @return
+	 * 		renvoie le Secteur créer.
+	 */
 	@Override
 	public Voie ajouterMetierVoie(String nom, String annotation, Secteur s) {
 		Voie v = new Voie(nom, annotation, s);
@@ -31,7 +54,18 @@ public class MetierVoieImpl implements MetierVoie {
 		}
 		return v;
 	}
+	/**
+	 * Méthode qui modifie une Voie.
+	 * @param nom
+	 * 		String nom de la voie.
 
+	 * @param annotation
+	 * 		String information sur la voie.
+	 * @param v
+	 * 		Voie à modifier.
+	 * @return
+	 * 		renvoie le Secteur modifié.
+	 */
 	@Override
 	public Voie modifierMetierVoie(String nom, String annotation, Voie v) {
 		v.setNom(nom);
@@ -43,7 +77,13 @@ public class MetierVoieImpl implements MetierVoie {
 		}
 		return v;
 	}
-
+	/**
+	 * Méthode qui trouve une Voie.
+	 * @param id
+	 * 		Long id du Secteur.
+	 * @return
+	 * 		renvoie le Secteur trouvé.
+	 */
 	@Override
 	public Voie trouverMetierVoie(Long id) {
 		Voie voie = null;
@@ -62,7 +102,11 @@ public class MetierVoieImpl implements MetierVoie {
 		}
 		return voie;
 	}
-
+	/**
+	 *  Méthode qui supprime une Voie.
+	 * @param v
+	 * 		Voie à supprimer.
+	 */
 	@Override
 	public void supprimerMetierVoie(Voie v) {
 		try {
@@ -70,7 +114,13 @@ public class MetierVoieImpl implements MetierVoie {
 		} catch (Exception e) {
 		}
 	}
-
+	/**
+	 * Méthode qui trouve les Voie par Secteur.
+	 * @param s
+	 * 		Secteur en paramètre de recherche.
+	 * @return
+	 * renvoie une liste de Voie appartenant au même Secteur.
+	 */
 	@Override
 	public List<Voie> listeParSecteurMetierVoie(Secteur s) {
 		List<Voie> list;
@@ -89,7 +139,13 @@ public class MetierVoieImpl implements MetierVoie {
 		}
 		return listReturn;
 	}
-
+	/**
+	 * Méthode qui retourne la cotation de la Voie.
+	 * @param v
+	 * 		Voie demandé.
+	 * @return
+	 * 		renvoie la cotation du secteur.
+	 */
 	@Override
 	public String cotationMetierVoie(Voie v) {
 		List<Longueur> list = metierLongueur.listeParVoieMetierLongueur(v);

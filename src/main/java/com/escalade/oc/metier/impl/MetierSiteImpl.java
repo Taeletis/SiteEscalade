@@ -9,20 +9,41 @@ import org.springframework.stereotype.Service;
 import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
-import com.escalade.oc.beans.Topo;
-import com.escalade.oc.beans.Voie;
 import com.escalade.oc.dao.DaoSite;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
-
+/**
+ * Class pour la couche metier de Site.
+ * @author Taeletis
+ * 
+ *         
+ *
+ */
 @Service
 public class MetierSiteImpl implements MetierSite {
+	/**
+	 * injection de DaoSite.
+	 */
 	@Autowired
 	private DaoSite daoSite;
-
+	/**
+	 * injection de MetierSecteur.
+	 */
 	@Autowired
 	private MetierSecteur metierSecteur;
-
+	/**
+	 *  Méthode qui ajoute un Site.
+	 * @param nom
+	 * 		String nom du Site.
+	 * @param lienImage
+	 * 		String lien url de l'image du Site.
+	 * @param lieu
+	 * 		String lieu du Site.
+	 * @param createur
+	 * 		Grimpeur créateur du SIte.
+	 * @return
+	 * 		renvoie le Site créé.
+	 */
 	@Override
 	public Site ajouterMetierSite(String nom, String lienImage, String lieu,Grimpeur createur) {
 		Site s = new Site(nom, lienImage, lieu,createur);
@@ -32,7 +53,19 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return s;
 	}
-
+	/**
+	 * Méthode qui modifie un Site.
+	 * @param nom
+	 * 		String nom du Site à modifier.
+	 * @param lienImage
+	 * 		String lien url de l'image du Site.
+	 * @param lieu
+	 * 		String lieu du Site.
+	 * @param s
+	 * 		Site à modifier.
+	 * @return
+	 * 		renvoie le Site modiifé.
+	 */
 	@Override
 	public Site modifierMetierSite(String nom, String lienImage, String lieu, Site s) {
 		s.setNom(nom);
@@ -45,7 +78,15 @@ public class MetierSiteImpl implements MetierSite {
 		return s;
 
 	}
-
+	/**
+	 * Méthode qui modifie un Site.
+	 * @param s
+	 * 		Site à modifier.
+	 * @param mention
+	 * 		Boolean metion à modifier.
+	 * @return
+	 * 		renvoie le Site modiifié
+	 */
 	@Override
 	public Site modifierMentionMetierSite(Site s, boolean mention) {
 		s.setMention(mention);
@@ -55,7 +96,13 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return s;
 	}
-
+	/**
+	 * Méthode qui trouve un Site.
+	 * @param id
+	 * 		Long id du Site recherché?
+	 * @return
+	 * 		renvoie le Site trouvé.
+	 */
 	@Override
 	public Site trouverMetierSite(Long id) {
 		List<Site> list = new ArrayList<Site>();
@@ -70,18 +117,16 @@ public class MetierSiteImpl implements MetierSite {
 				}
 
 			}
-			/*
-			 * for (int i = 0; i < list.size(); i++) { s = list.get(i); String nom =
-			 * s.getLieu(); if (nom.equalsIgnoreCase(name)) { listReturn.add(s); }
-			 * 
-			 * }
-			 */
 		} catch (Exception e) {
 
 		}
 		return s;
 	}
-
+	/**
+	 * Méthode qui supprime un Site.
+	 * @param s
+	 * 		Site à supprimer.
+	 */
 	@Override
 	public void supprimerMetierSite(Site s) {
 		try {
@@ -89,7 +134,13 @@ public class MetierSiteImpl implements MetierSite {
 		} catch (Exception e) {
 		}
 	}
-
+	/**
+	 * Méthode qui donne la cotation d'un Site.
+	 * @param s
+	 * 		Site demandé.
+	 * @return
+	 * 		renvoie la cotation du Site.
+	 */
 	@Override
 	public String cotationMetierSite(Site s) {
 		List<Secteur> list = metierSecteur.listeParSiteMetierSecteur(s);
@@ -123,7 +174,11 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return cotation;
 	}
-
+	/**
+	 * Méthode qui donne tous les Sites.
+	 * @return
+	 * 		renoie une liste des tous les Sites.
+	 */
 	@Override
 	public List<Site> listeMetierSite() {
 		List<Site> list = null;
@@ -135,7 +190,13 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return list;
 	}
-
+	/**
+	 * Méthode qui trouve les Sites par nom.
+	 * @param name
+	 * 		String nom en paramètre de recherche.
+	 * @return
+	 * 		renvoie une liste de Site. ayant le même nom.
+	 */
 	@Override
 	public List<Site> chercherParNomMetierSite(String name) {
 		List<Site> list = new ArrayList<Site>();
@@ -159,7 +220,13 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return listReturn;
 	}
-
+	/**
+	 * Méthode qui trouve les Sites par lieu.
+	 * @param endroit
+	 * 		String lieu en paramètre de recherche.
+	 * @return
+	 * 		renvoie une liste de Site. ayant le même lieu.
+	 */
 	@Override
 	public List<Site> chercherParLieuMetierSite(String endroit) {
 		List<Site> list = new ArrayList<Site>();
@@ -185,7 +252,13 @@ public class MetierSiteImpl implements MetierSite {
 		System.out.println(listReturn);
 		return listReturn;
 	}
-	
+	/**
+	 * Méthode qui trouve les Sites par nom de Grimpeur.
+	 * @param g
+	 * 		String nom du Grimpeur en paramètre de recherche.
+	 * @return
+	 * 			renvoie une liste de Site. ayant le même nom de Grimpeur.
+	 */	
 	public List<Site> chercherParGrimpeurMetierSite(String  g) {
 		List<Site> list = new ArrayList<Site>();
 		List<Site> listReturn = new ArrayList<Site>();
@@ -207,7 +280,13 @@ public class MetierSiteImpl implements MetierSite {
 		}
 		return listReturn;
 	}
-	
+	/**
+	 * Méthode qui trouve les Sites par Grimpeur.
+	 * @param g
+	 * 		Grimpeur en paramètre de recherche.
+	 * @return
+	 * 		renvoie une liste de Site. ayant le même Grimpeur.
+	 */	
 	public List<Site> chercherParGrimpeurMetierSite(Grimpeur  g) {
 		List<Site> list = new ArrayList<Site>();
 		List<Site> listReturn = new ArrayList<Site>();

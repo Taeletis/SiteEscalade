@@ -14,13 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
+/**
+ * Entité Topo.
+ * @author Taeletis
+ * 
+ *  
+ *
+ */
 @Entity
 public class Topo implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1097578189529050880L;
 
 	@Id
@@ -47,6 +51,22 @@ public class Topo implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * Constructeur d'un Topo.
+	 * @param nom
+	 * 		String nom du topo.
+	 * @param lieu
+	 * 		String lieu du topo. 		
+	 * @param dateParutrion
+	 * 		Date creation du topo.
+	 * @param disponible
+	 * 		boolean disponibilité du topo.
+	 * @param proprietaire
+	 * 		Grimpeur auquel appartient le topo.
+	 * @param s
+	 * 		Site auquel appartient le topo.
+	 * 		
+	 */
 	public Topo(String nom,String lieu, Date dateParutrion, boolean disponible, Grimpeur proprietaire,Site s) {
 		super();
 		

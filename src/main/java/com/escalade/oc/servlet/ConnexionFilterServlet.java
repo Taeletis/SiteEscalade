@@ -13,13 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(urlPatterns = { "/recherche", "/site","/secteur","/topo","/compte","/mesSites","/monSite","/reservation","/deconnexion","/grimpeur","/WEB-INF/jsp/Acceuil.jsp"})
+/**
+ * Filtre qui empeche l'acces au pages sans se connecter.
+ * @author Taeletis
+ *
+ *
+ */
+@WebFilter(urlPatterns = { "/recherche", "/site","/secteur","/topo","/compte","/mesSites","/monSite","/reservation","/deconnexion","/grimpeur","/WEB-INF/jsp/Acceuil.jsp","/"})
 public class ConnexionFilterServlet implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 	}
 
+	/**
+	 * méthode qui filtre les pages si la requete ne contient pas de session.
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -34,6 +43,7 @@ public class ConnexionFilterServlet implements Filter {
 			chain.doFilter(request, response);
 		}
 	}
+
 
 	@Override
 	public void destroy() {

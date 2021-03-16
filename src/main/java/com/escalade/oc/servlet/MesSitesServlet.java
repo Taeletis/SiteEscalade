@@ -36,23 +36,48 @@ import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
 import com.escalade.oc.metier.MetierTopo;
 import com.escalade.oc.metier.MetierVoie;
+/**
+ * Servlet controlant la page de sites possédé par l'utilsateur.
+ * @author Taeletis
+ *	
+ */
 
 @WebServlet(urlPatterns = "/mesSites")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class MesSitesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@Autowired
+	/**
+	 * injection de MetierSite.
+	 */@Autowired
 	private MetierSite metierSite;
-	@Autowired
+	 /**
+		 * injection de MetierTopo.
+		 */
+	 @Autowired
 	private MetierTopo metierTopo;
-	@Autowired
+	 /**
+		 * injection de MetierReservation.
+		 */
+	 @Autowired
 	private MetierReservation metierReservation;
-	@Autowired
+	 /**
+		 * injection de MetierSecteur.
+		 */
+	 @Autowired
 	private MetierSecteur metierSecteur;
+	/**
+	 * injection de MetierVoie.
+	 */
 	@Autowired
 	private MetierVoie metierVoie;
+	/**
+	 * injection de MetierLongueur.
+	 */
 	@Autowired
 	private MetierLongueur metierLongueur;
+	/**
+	 * injection de MetierCommentaire.
+	 */
 	@Autowired
 	private MetierCommentaire metierCommentaire;
 
@@ -65,6 +90,7 @@ public class MesSitesServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet qui permet l'envoi d'information detous les sites et leur topo de l'utilsateur.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -75,14 +101,13 @@ public class MesSitesServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
-			System.out.println(g);
+
 			List<Site> sites = metierSite.chercherParGrimpeurMetierSite(g);
 			HashMap<Site, List<Topo>> liste = new HashMap<Site, List<Topo>>();
 			for (Site s : sites) {
 				List<Topo> t = metierTopo.listeParSiteMetierTopo(s);
 				liste.put(s, t);
 			}
-			System.out.println(sites);
 
 			request.setAttribute("sites", liste);
 
@@ -93,6 +118,7 @@ public class MesSitesServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost qui permet d'enregistrer ou de modifié des Sites et leur topos.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -102,7 +128,7 @@ public class MesSitesServlet extends HttpServlet {
 
 		Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
 		String type = request.getParameter("type");
-		if ("site".equals(type)) {
+		if (type.equals("site")) {
 			String nom = request.getParameter("nom");
 			String lieu = request.getParameter("lieu");
 			String fileName = "";
@@ -110,9 +136,8 @@ public class MesSitesServlet extends HttpServlet {
 				Part filePart = request.getPart("image"); // Retrieves <input type="file" name="file">
 
 				fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-				//
-				// String root = System.getProperty("user.dir") +
-				// "/src/main/resources/META-INF/resources";
+				
+				// String root = System.getProperty("user.dir") + "/src/main/resources/META-INF/resources";
 				String root = getServletContext().getRealPath("");
 
 				fileName = new File(fileName).getName();
@@ -124,7 +149,7 @@ public class MesSitesServlet extends HttpServlet {
 			metierSite.ajouterMetierSite(nom, fileName, lieu, g);
 
 		}
-		if ("topo".equals(type)) {
+		if (type.equals("topo")) {
 			String nom = request.getParameter("nom");
 			String lieu = request.getParameter("lieu");
 			String idSite = request.getParameter("idSite");
@@ -136,7 +161,7 @@ public class MesSitesServlet extends HttpServlet {
 			metierTopo.ajouterMetierTopo(nom, lieu, check, g, site);
 
 		}
-		if ("modifierTopo".equals(type)) {
+		if (type.equals("modifierTopo")) {
 			String nom = request.getParameter("nom");
 			String lieu = request.getParameter("lieu");
 			String idTopo = request.getParameter("idTopo");
@@ -145,7 +170,7 @@ public class MesSitesServlet extends HttpServlet {
 			if (!"on".equals(request.getParameter("disponible")))
 				check = false;
 			Topo t = metierTopo.trouverMetierTopo(topoId);
-			metierTopo.modifierMetierTopo(nom, lieu, check, g, t);
+			metierTopo.modifierMetierTopo(nom, lieu, check, t);
 
 		}
 		if (type.equals("modifierSite")) {
@@ -231,7 +256,12 @@ public class MesSitesServlet extends HttpServlet {
 		httpResponse.sendRedirect("/mesSites");
 
 	}
-
+	
+	/**
+	 * Méthode qui permet d'actualiser les notifications topos.
+	 * @param session
+	 * 		HttpSession modifié.
+	 */
 	private void actualiserTopo(HttpSession session) {
 		Grimpeur g = (Grimpeur) session.getAttribute("grimpeur");
 		List<Site> list = metierSite.chercherParGrimpeurMetierSite(g);

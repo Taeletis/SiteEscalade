@@ -3,7 +3,6 @@ package com.escalade.oc.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,13 +19,28 @@ import com.escalade.oc.beans.Voie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierVoie;
+/**
+ * Servlet controlant la page d'information d'un secteur.
+ * @author Taeletis
+ *	
+ */
+
 @WebServlet(urlPatterns = "/secteur")
 public class SecteurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierSecteur.
+	 */
 	@Autowired
 	private MetierSecteur metierSecteur;
+	/**
+	 * injection de MetierVoie.
+	 */
 	@Autowired
 	private MetierVoie metierVoie;
+	/**
+	 * injection de MetierLongueur.
+	 */
 	@Autowired
 	private MetierLongueur metierLongueur;
 	
@@ -39,6 +53,7 @@ public class SecteurServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet qui permet l'envoi d'information sur les voies et leur longueurq d'un secteur.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -59,18 +74,16 @@ public class SecteurServlet extends HttpServlet {
 		 	voies.addAll(metierVoie.listeParSecteurMetierVoie(secteur));
 	
 		 	HashMap<Voie,String> h= new HashMap <Voie,String>();
-		 	Iterator it= voies.iterator();
-		 	while(it.hasNext()) {
-				Voie v=(Voie)it.next();
+
+		 	for (Voie v: voies) {
 				String cotation="";
 				cotation=metierVoie.cotationMetierVoie(v);
 				 h.put(v,cotation);
 		 	}
 		 	
 		 	HashMap<HashMap<Voie,String>,List<Longueur>> h2 = new HashMap<HashMap<Voie,String>,List<Longueur>>();
-		 	it=h.keySet().iterator();
-			while(it.hasNext()) {
-				Voie v=(Voie)it.next();
+
+			for (Voie v: h.keySet()) {
 				String cotation="";
 				 cotation=h.get(v);
 				HashMap<Voie,String>h3= new HashMap <Voie,String>();

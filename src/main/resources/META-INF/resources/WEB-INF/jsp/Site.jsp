@@ -32,7 +32,46 @@
 
 				<img class="img-fluid" src="${site.lienImage}">
 				<div class="media-body">
-					<h5 class="mt-0">${site.nom}</h5>
+					<h5 class="mt-0">${site.nom}</h5><h3> ${site.mention ? '<i class="fa fa-trophy" style="color:gold"></i>' :'' }</h3>
+					<c:if test="${grimpeur.membre}">
+					<button type="button" class="btn btn-light" data-toggle="modal" data-target="#changermention"><i class="fa fa-gavel"></i></button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="changermention" tabindex="-1" role="dialog"
+						aria-labelledby="changermentionCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="changermentionLongTitle">donner/retirer la mention</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<form method="post" action="" >
+									<div class="modal-body">
+							          <div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="choix" id="accepter" value="true">
+  <label class="form-check-label" for="accepter">Avec mention</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio"  name="choix" id="refuser" value="false">
+  <label class="form-check-label" for="refuser">Sans mention</label>
+  
+  <input type="hidden" name="idSite" id="site" value="${site.idSite}"/>
+<input type="hidden" name="type" id="type" value="changerMention" />
+</div>
+										
+									</div>
+									<div class="modal-footer">
+									
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<button type="submit" class="btn btn-primary">Save changes</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					</c:if>
 					<p>${site.lieu}</p>
 
 					<p>cotation : ${cotation}</p>

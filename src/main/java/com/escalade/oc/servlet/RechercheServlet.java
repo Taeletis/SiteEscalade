@@ -19,10 +19,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierSite;
-
+/**
+ * Servlet controlant la page de 'affichage des sites enregistré par les utilisateurs.
+ * @author Taeletis
+ *	
+ */
 @WebServlet(urlPatterns = "/recherche")
 public class RechercheServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierSite.
+	 */
 	@Autowired
 	private MetierSite metierSite;
 
@@ -35,6 +42,7 @@ public class RechercheServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet qui permet l'envoi d'information sur les sites enregistrés.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -78,6 +86,7 @@ public class RechercheServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost qui permet de rechercher des sites particuliers.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -121,18 +130,15 @@ public class RechercheServlet extends HttpServlet {
 				HashMap<Grimpeur,String> h2 = new HashMap<Grimpeur,String>();
 				h2.put(g,cotation);
 				h.put(s,h2);
-				System.out.println(h);
 				
 			}
 			request.setAttribute("sites", h);
-			System.out.println("recherche");
-			System.out.println(h);
+
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
 			
 			
 
 		} catch (Exception e) {
-			System.out.println("truc");
 			e.printStackTrace();
 		}
 

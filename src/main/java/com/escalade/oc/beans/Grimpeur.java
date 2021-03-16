@@ -9,7 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
+/**
+ *  Entité Commentaire.
+ * @author Taeletis
+ * 
+ *
+ */
 
 @Entity
 public class Grimpeur implements Serializable {
@@ -41,6 +46,17 @@ public class Grimpeur implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Constructeur d'un Grimpeur.
+	 * @param nom
+	 * 		String nom du Grimpeur.
+	 * @param prenom
+	 * 		String prénom du Grimpeur.
+	 * @param email
+	 * 		String prénom du Grimpeur.
+	 * @param mdp
+	 *		String mot de passe du Grimpeur.
+	 */
 	public Grimpeur(String nom, String prenom,String email, String mdp) {
 		super();
 		this.nom = nom;

@@ -12,11 +12,35 @@ import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.dao.DaoCommentaire;
 import com.escalade.oc.metier.MetierCommentaire;
+/**
+ * Class pour la couche metier du Commentaire.
+ * @author Taeletis
+ *
+ *
+ */
 @Service
 public class MetierCommentaireImpl implements MetierCommentaire{
+	/**
+	 * injection de DaoCommentaire.
+	 * 
+	 * @see DaoCommentaire
+	 */
 	@Autowired
 	private DaoCommentaire daoCommentaire;
-
+	
+	/**
+	 * Méthode qui ajoute un commentaire.
+	 * 
+	 * @param description
+	 * 		String qui contient le commentaire. 
+	 * @param s
+	 * 		Site concerné
+	 * @param auteur
+	 * 		Grimpeur auteur du commentaire.
+	 * @return
+	 * 	renvoi le commentaire créer.
+	 * 	
+	 */
 	@Override
 	public Commentaire ajouterMetierCommentaire(String description, Site s, Grimpeur auteur) {
 	
@@ -28,7 +52,18 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 		}
 		return c;
 	}
+	
+	/**
+	 * Méthode qui modfie un commentaire.
 
+	 * @param description
+	 * 		String qui contient le commentaire édité. 
+	 * @param c
+	 * 		Commentaire concerné par la modification.
+	 * @return
+	 * 		renvoie le commentaire modifié.
+	 * 	
+	 */
 	@Override
 	public Commentaire modifierMetierCommentaire(String description, Commentaire c) {
 		Date date=new Date();
@@ -40,7 +75,15 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 		}
 		return c;
 	}
-
+	/**
+	 *  Méthode qui retouve un commentaire par son id.
+	 * 
+	 * @param id
+	 * 		id du commentaire recherché.
+	 * @return
+	 * 		renoive le commentaire trouvé.
+	 * 
+	 */
 	@Override
 	public Commentaire trouverMetierCommentaire(Long id) {
 		Commentaire c=null;
@@ -61,6 +104,12 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 	return c;
 	}
 
+	/**
+	 *  Méthode qui supprime un commentaire.
+	 * 
+	 * @param c
+	 * 		le commentaire à supprimer.
+	 */
 	@Override
 	public void supprimerMetierCommentaire(Commentaire c) {
 		try {
@@ -69,6 +118,14 @@ public class MetierCommentaireImpl implements MetierCommentaire{
 		}
 	}
 
+	/**
+	 *  Méthode qui retouve les Commentaires par Site.
+	 * 
+	 * @param s
+	 * 		Site en paramètre de recherchee.
+	 * @return
+	 * 		renvoie une liste de Commentaires qui ont le même Site.
+	 */
 	@Override
 	public List<Commentaire> listeParSiteMetierCommentaire(Site s) {
 		List<Commentaire> list;

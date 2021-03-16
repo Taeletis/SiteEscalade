@@ -13,36 +13,46 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.escalade.oc.beans.Longueur;
-import com.escalade.oc.beans.Reservation;
 import com.escalade.oc.beans.Secteur;
 import com.escalade.oc.beans.Site;
-import com.escalade.oc.beans.Topo;
 import com.escalade.oc.beans.Voie;
 import com.escalade.oc.metier.MetierLongueur;
 import com.escalade.oc.metier.MetierSecteur;
 import com.escalade.oc.metier.MetierSite;
 import com.escalade.oc.metier.MetierVoie;
-
+/**
+ * 	Servlet controlant la page des secteurs d'un site possédé par l'utilsateur.
+ * @author Taeletis
+ *
+ */
 @WebServlet(urlPatterns = "/monSite")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 public class MonSiteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	/**
+	 * injection de MetierSite.
+	 */
 	@Autowired
 	private MetierSite metierSite;
+	/**
+	 * injection de MetierSecteur.
+	 */
 	@Autowired
 	private MetierSecteur metierSecteur;
-	@Autowired
+	/**
+	 * injection de MetierVoie.
+	 */@Autowired
 	private MetierVoie metierVoie;
-	@Autowired
+	 /**
+		 * injection de MetierLongueur.
+		 */
+	 @Autowired
 	private MetierLongueur metierLongueur;
-	public static final int TAILLE_TAMPON = 10240;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -53,6 +63,7 @@ public class MonSiteServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet  qui permet l'envoi d'information de tous les secteurs, leur voies et leur longueurs du site de l'utilsateur.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -60,7 +71,6 @@ public class MonSiteServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			HttpSession session = request.getSession();
 			String id = request.getParameter("id");
 			Long siteId = Long.parseLong(id);
 
@@ -90,7 +100,6 @@ public class MonSiteServlet extends HttpServlet {
 
 			}
 
-			System.out.println(liste + "test");
 			request.setAttribute("secteurs", liste);
 
 		} catch (Exception e) {
@@ -100,6 +109,7 @@ public class MonSiteServlet extends HttpServlet {
 	}
 
 	/**
+	 *doPost qui permet d'enregistrer ou de modifié les secteurs, leur voies et leur longueurs du site de l'utilsateur.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -107,7 +117,6 @@ public class MonSiteServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		String type = request.getParameter("type");
-		System.out.println(type);
 
 		if (type.equals("longueur")) {
 			String hauteur = request.getParameter("hauteur");
@@ -115,7 +124,7 @@ public class MonSiteServlet extends HttpServlet {
 			String idd2 = request.getParameter("idVoie");
 			Long voieId = Long.parseLong(idd2);
 			Voie v = metierVoie.trouverMetierVoie(voieId);
-			metierLongueur.ajouterMetierLongueur(Double.parseDouble(hauteur), cotation, "", v);
+			metierLongueur.ajouterMetierLongueur(Double.parseDouble(hauteur), cotation, v);
 
 		}
 		if (type.equals("voie")) {
@@ -157,7 +166,7 @@ public class MonSiteServlet extends HttpServlet {
 			String idLongueur = request.getParameter("idLongueur");
 			Long longueurId = Long.parseLong(idLongueur);
 			Longueur l = metierLongueur.trouverMetierLongueur(longueurId);
-			metierLongueur.modifierMetierLongueur(Double.parseDouble(hauteur), cotation, "", l);
+			metierLongueur.modifierMetierLongueur(Double.parseDouble(hauteur), cotation, l);
 			
 
 		}

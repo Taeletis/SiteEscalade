@@ -3,7 +3,6 @@ package com.escalade.oc.servlet;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,12 +17,23 @@ import com.escalade.oc.beans.Grimpeur;
 import com.escalade.oc.beans.Site;
 import com.escalade.oc.metier.MetierGrimpeur;
 import com.escalade.oc.metier.MetierSite;
+/**
+ * Servlet controlant la page d'information des Grimpeurs.
+ * @author Taeletis
+ *	
+ */
 
 @WebServlet(urlPatterns = "/grimpeur")
 public class GrimpeurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierGrimpeur.
+	 */
 	@Autowired
 	private MetierGrimpeur metierGrimpeur;
+	/**
+	 * injection de MetierSite.
+	 */
 	@Autowired
 	private MetierSite metierSite;
 	/**
@@ -35,6 +45,7 @@ public class GrimpeurServlet extends HttpServlet {
 	}
 
 	/**
+	 * goGet donne l'information d'un grimpeur.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -55,6 +66,7 @@ public class GrimpeurServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost renvoie vers la liste des sites avec le grimpeur de la page en paramtre de recherche.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -71,28 +83,23 @@ public class GrimpeurServlet extends HttpServlet {
 		
 		
 			HashMap<Site,HashMap<Grimpeur,String>> h = new HashMap<Site,HashMap<Grimpeur,String>>();
-			
-			System.out.println(l);
-			Iterator it= l.iterator();
-			while(it.hasNext()) {
-				Site s=(Site)it.next();
+
+			for(Site s: l) {
+				
 				String cotation=metierSite.cotationMetierSite(s);
 				Grimpeur g=s.getCreateur();
 				HashMap<Grimpeur,String> h2 = new HashMap<Grimpeur,String>();
 				h2.put(g,cotation);
 				h.put(s,h2);
-				System.out.println(h);
 				
 			}
 			request.setAttribute("sites", h);
-			System.out.println("recherche");
-			System.out.println(h);
+
 			this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Recherche.jsp").forward(request, response);
 			
 			
 
 		} catch (Exception e) {
-			System.out.println("truc");
 			e.printStackTrace();
 		}
 

@@ -1,0 +1,6 @@
+com.escalade.oc
+com.escalade.oc.beans
+com.escalade.oc.dao
+com.escalade.oc.metier
+com.escalade.oc.metier.impl
+com.escalade.oc.servlet

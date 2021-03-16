@@ -2,8 +2,6 @@ package com.escalade.oc.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,20 +13,28 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.escalade.oc.beans.Grimpeur;
+
 import com.escalade.oc.beans.Reservation;
-import com.escalade.oc.beans.Site;
 import com.escalade.oc.beans.StatutType;
-import com.escalade.oc.metier.MetierGrimpeur;
 import com.escalade.oc.metier.MetierReservation;
-import com.escalade.oc.metier.MetierSite;
 import com.escalade.oc.metier.MetierStatutType;
 
+/**
+ * Servlet controlant la page des demandes reservations.
+ * @author Taeletis
+ *	
+ */
 @WebServlet(urlPatterns = "/reservation")
 public class ReservationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierStatutType.
+	 */
 	@Autowired
 	private MetierStatutType metierStatutType;
+	/**
+	 * injection de MetierReservation.
+	 */
 	@Autowired
 	private MetierReservation metierReservation;
 	/**
@@ -57,6 +63,7 @@ public class ReservationServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost qui permet de modifier les états des reservations demandé.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

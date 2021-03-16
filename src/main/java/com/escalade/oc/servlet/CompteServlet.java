@@ -27,12 +27,24 @@ import com.escalade.oc.beans.Topo;
 import com.escalade.oc.metier.MetierGrimpeur;
 import com.escalade.oc.metier.MetierReservation;
 
+/**
+ * Servlet controlant la page de compte.
+ * @author Taeletis
+ *	
+ */
+
 @WebServlet(urlPatterns = "/compte")
 public class CompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	/**
+	 * injection de MetierGrimpeur.
+	 */
 	@Autowired
 	private MetierGrimpeur metierGrimpeur;
 	
+	/**
+	 * injection de MetierGrimpeur.
+	 */
 	@Autowired
 	private MetierReservation metierReservation;
 
@@ -46,6 +58,7 @@ public class CompteServlet extends HttpServlet {
 	}
 
 	/**
+	 * doGet qui permet l'envoi d'information de compte.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -57,10 +70,9 @@ public class CompteServlet extends HttpServlet {
 		List<Reservation> liste=new ArrayList<Reservation>();
 		try {
 	 	liste.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
-	 	System.out.println(liste);
+
 	 	request.setAttribute("Reservations",liste); 
 		} catch (Exception e) {
-			System.out.println("truc");
 			e.printStackTrace();
 
 		}
@@ -68,6 +80,7 @@ public class CompteServlet extends HttpServlet {
 	}
 
 	/**
+	 * doPost qui permet de modifier les information du compte connecté.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -90,7 +103,7 @@ public class CompteServlet extends HttpServlet {
 					if (!metierGrimpeur.verifierInscriptionMetierGrimpeur(email)||g.getEmail().equals(email)) {
 						String cryptedMdp =securite	(motDePasse);	
 						metierGrimpeur.modifierMetierGrimpeur(nom, prenom, email, cryptedMdp,g);
-						System.out.println("inscription");
+						
 						this.getServletContext().getRequestDispatcher("/WEB-INF/jsp/Compte.jsp").forward(request,
 								response);
 
@@ -103,14 +116,20 @@ public class CompteServlet extends HttpServlet {
 				}
 
 			} catch (Exception e) {
-				System.out.println("truc");
 				e.printStackTrace();
 
 			}
 
 		}
 	}
-	public  String securite(String motDePasse) {
+	/**
+	 * méthode qui crypte le mot de passe.
+	 * @param motDePasse
+	 * 		mot de passe à crypter.
+	 * @return
+	 * 		renvoie le mot de passe crypté.
+	 */
+	private  String securite(String motDePasse) {
 		
 		try {
 			String cryptedMdp="";
@@ -126,9 +145,9 @@ public class CompteServlet extends HttpServlet {
 		
 				sk= k.generateKey();
 				String encodedKey = Base64.getEncoder().encodeToString(sk.getEncoded());
-				System.out.println(encodedKey);
+
 				prop.setProperty("key", encodedKey);
-				System.out.println(prop.getProperty("key"));
+
 			}
 		else {
 		
@@ -140,7 +159,7 @@ public class CompteServlet extends HttpServlet {
 			cipher.init(Cipher.ENCRYPT_MODE, sk);
 			byte[] textCrypted=cipher.doFinal(text);
 			cryptedMdp=new String(textCrypted);
-			System.out.println(cryptedMdp);	
+
 			
 			
 			return cryptedMdp;

@@ -11,13 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
+/**
+ * Entité Voie.
+ * @author Taeletis
+ * 
+ *  
+ *
+ */
 @Entity
 public class Voie implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6879647161093382866L;
 	@Id
 	@GeneratedValue
@@ -37,6 +40,15 @@ public class Voie implements Serializable {
 		super(); // TODO Auto-generated constructor stub
 
 	}
+	/**
+	 * Constructeur d'une Voie.
+	 * @param nom
+	 * 		String nom de la voie.
+	 * @param annotation
+	 * 		String precision sur la voie.
+	 * @param s
+	 * 		Secteur auquel appartient la voie.
+	 */
 	public Voie(String nom, String annotation, Secteur s) {
 		this.nom=nom;
 		this.annotation=annotation;

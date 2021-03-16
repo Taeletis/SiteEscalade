@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Servlet permettant la deconnexion.
+ * @author Taeletis
+ *	
+ */
 
 @WebServlet(urlPatterns = "/deconnexion")
 public class DeconnexionServlet extends HttpServlet {
@@ -16,7 +21,6 @@ public class DeconnexionServlet extends HttpServlet {
 
 
 	/**
-	 * @see HttpServlet#HttpServlet()
 	 */
 	public DeconnexionServlet() {
 		super();
@@ -24,8 +28,8 @@ public class DeconnexionServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * doGet detruit la session actuel pour deconnecter un utilisateur.
+	 * 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

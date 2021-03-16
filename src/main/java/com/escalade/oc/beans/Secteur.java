@@ -13,13 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-
+/**
+ * Entité Secteur.
+ *
+ * @author Taeletis
+ * 
+ *  
+ */
 @Entity
 public class Secteur implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2113762427496237130L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +39,17 @@ public class Secteur implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * Constructeur d'un Secteur.
+	 * @param nom
+	 * 		String nom du secteur.
+	 * @param lienCarte
+	 * 		String lien url de l'image du secteur.
+	 * @param description
+	 * 		String description du secteur.
+	 * @param site
+	 * 		Site auquel appartient le secteur.
+	 */
 	public Secteur(String nom,String lienCarte, String description, Site site) {
 		super();
 		this.nom = nom;

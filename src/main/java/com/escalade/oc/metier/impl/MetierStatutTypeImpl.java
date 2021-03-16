@@ -9,11 +9,27 @@ import org.springframework.stereotype.Service;
 import com.escalade.oc.beans.StatutType;
 import com.escalade.oc.dao.DaoStatutType;
 import com.escalade.oc.metier.MetierStatutType;
+/**
+ * Class pour la couche metier de StatutType.
+ * @author Taeletis
+ * 
+ *         
+ *
+ */
 @Service
 public class MetierStatutTypeImpl implements MetierStatutType{
+	/**
+	 * injection de DaoSecteur.
+	 */
 	@Autowired
 	private DaoStatutType daoStatutType;
-
+	/**
+	 * Méthode qui ajoute un StatutType.
+	 * @param statut
+	 * 		String type du statut.
+	 * @return
+	 * 		renvoie le StatutType créé.
+	 */
 	@Override
 	public StatutType ajouterMetierStatutType(String statut) {
 		StatutType s =new StatutType(statut);
@@ -25,7 +41,15 @@ public class MetierStatutTypeImpl implements MetierStatutType{
 		return s;
 		
 	}
-
+	/**
+	 * Méthode qui modifie un StatutType.
+	 * @param statut
+	 * 		String type à modifier.
+	 * @param s
+	 * 		StatutType à modifier.
+	 * @return
+	 * renvoie le StatutType modifié.
+	 */
 	@Override
 	public StatutType modifierMetierStatutType(String statut, StatutType s) {
 		s.setStatut(statut);
@@ -36,7 +60,11 @@ public class MetierStatutTypeImpl implements MetierStatutType{
 		}
 		return s;
 	}
-
+	/**
+	 * Méthode qui supprime un Site.
+	 * @param s
+	 * 		StatutType à supprimer.
+	 */
 	@Override
 	public void supprimerMetierStatutType(StatutType s) {
 		try {
@@ -46,7 +74,13 @@ public class MetierStatutTypeImpl implements MetierStatutType{
 		}
 
 	}
-
+	/**
+	 * Méthode qui trouve les StatutTypes par id.
+	 * @param id
+	 * 		Long id du StatutType recherché.
+	 * @return
+	 * 		renvoie le StatutType trouvé.
+	 */
 	@Override
 	public StatutType trouverMetierStatutType(Long id) {
 		List<StatutType> list = new ArrayList<StatutType>();
@@ -65,7 +99,11 @@ public class MetierStatutTypeImpl implements MetierStatutType{
 		}
 		return s;
 }
-
+	/**
+	 * Méthode qui donne tous les StatutTypes.
+	 * @return
+	 * 		renvoie une avec tous les StatutTypes.
+	 */
 	@Override
 	public List<StatutType> listeTousMetierStatutType() {
 		List<StatutType> list=null;

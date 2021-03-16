@@ -8,12 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-
+/**
+ * Entité Longueur.
+ * @author Taeletis
+ * 
+ *  
+ *
+ */
 @Entity
 public class Longueur implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6651536758750954052L;
 	@Id
 	@GeneratedValue
@@ -27,7 +31,6 @@ public class Longueur implements Serializable {
 
 	private double hauteur;
 	private String cotation;
-	private String annotation;
 
 	@ManyToOne
 	@JoinColumn(name = "ID_VOIE")
@@ -37,11 +40,19 @@ public class Longueur implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Longueur(double hauteur, String cotation,String annotation, Voie voie) {
+	/**
+	 *  Constructeur d'une Longueur.
+	 * @param hauteur
+	 * 		double hauteur de la longueur.
+	 * @param cotation
+	 * 		String cotation de la longueur.
+	 * @param voie
+	 * 		Voie auquel appartient la Longueur.
+	 */
+	public Longueur(double hauteur, String cotation, Voie voie) {
 		super();
 		this.hauteur = hauteur;
 		this.cotation = cotation;
-		this.annotation=annotation;
 		this.voie = voie;
 	}
 
@@ -61,13 +72,6 @@ public class Longueur implements Serializable {
 		this.cotation = cotation;
 	}
 
-	public String getAnnotation() {
-		return annotation;
-	}
-
-	public void setAnnotation(String annotation) {
-		this.annotation = annotation;
-	}
 
 	public Voie getVoie() {
 		return voie;
