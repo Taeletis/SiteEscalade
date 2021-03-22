@@ -73,13 +73,15 @@ public class GrimpeurServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String grimpeur = request.getParameter("grimpeur");
+		String grimpeur = request.getParameter("idGrimpeur");
+		Long grimpeurId= Long.parseLong(grimpeur);
+ 		Grimpeur grimp=metierGrimpeur.trouverMetierGrimpeur(grimpeurId);
 		;
 		try {
 			List<Site> l= new ArrayList <Site>();
 		
 		if(!"".equals(grimpeur))
-			l.addAll(metierSite.chercherParGrimpeurMetierSite(grimpeur));
+			l.addAll(metierSite.chercherParGrimpeurMetierSite(grimp));
 		
 		
 			HashMap<Site,HashMap<Grimpeur,String>> h = new HashMap<Site,HashMap<Grimpeur,String>>();

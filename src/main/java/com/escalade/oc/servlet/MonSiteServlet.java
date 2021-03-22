@@ -173,7 +173,7 @@ public class MonSiteServlet extends HttpServlet {
 		if ("modifierVoie".equals(type)) {
 			String nom = request.getParameter("nom");
 			String annotation = request.getParameter("annotation");
-			String idd2 = request.getParameter("idSecteur");
+			String idd2 = request.getParameter("idVoie");
 			Long idVoie = Long.parseLong(idd2);
 			Voie v = metierVoie.trouverMetierVoie(idVoie);
 			metierVoie.modifierMetierVoie(nom, annotation, v);

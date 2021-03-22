@@ -3,6 +3,7 @@ package com.escalade.oc.metier.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -208,7 +209,7 @@ public class MetierSiteImpl implements MetierSite {
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				String nom = s.getNom();
-				if (nom.contains(name)) {
+				if (StringUtils.containsIgnoreCase(nom, name)) {
 					listReturn.add(s);
 				}
 
@@ -238,7 +239,7 @@ public class MetierSiteImpl implements MetierSite {
 			for (Site s: list) {
 				
 				String lieu = s.getLieu();
-				if (lieu.contains(endroit)) {
+				if (StringUtils.containsIgnoreCase(lieu, endroit)) {
 					listReturn.add(s);
 					System.out.println(listReturn);
 				}
@@ -269,7 +270,7 @@ public class MetierSiteImpl implements MetierSite {
 			for (int i = 0; i < list.size(); i++) {
 				s = list.get(i);
 				Grimpeur gg = s.getCreateur();
-				if (gg.getNom().contains(g)) {
+				if (StringUtils.containsIgnoreCase(gg.getNom(), g)) {
 					listReturn.add(s);
 				}
 

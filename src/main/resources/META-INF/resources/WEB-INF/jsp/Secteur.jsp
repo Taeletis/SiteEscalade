@@ -29,7 +29,7 @@
 
 			<div class="col">
 				<p>
-					<img src="${lienImage}">
+					<img src="${lienImage}" class="img-fluid">
 				</p>
 			</div>
 

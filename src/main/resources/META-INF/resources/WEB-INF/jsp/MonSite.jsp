@@ -34,7 +34,7 @@
 		
 			
 				<p>
-					<img src="${site.lienImage}">
+					<img src="${site.lienImage}" class="img-fluid">
 				</p>
 		
 		</div>
@@ -330,7 +330,7 @@
 															<c:set var="count" value="${count + 1}" scope="page" />
 															<tr>
 																<th scope="row">${count}</th>
-																<td>${l.hauteur}</td>
+																<td>${l.hauteur} m</td>
 																<td>${l.cotation}</td>
 																<td>
 																	<!-- Button trigger modal -->
@@ -354,10 +354,10 @@
 
 
 																						<label for="hauteur">hauteur de la Longueur<span class="requis">*</span></label>
-																						<input type="text" id="hauteur" name="hauteur" value="${l.hauteur}" size="20"
-																							maxlength="60" /> <br /> <label for="cotation">cotation<span
+																						<input type="text" id="hauteur" name="hauteur" value="${l.hauteur}" required pattern="[0-9,.]{1,4}"/> <br />
+																						<label for="cotation">cotation<span
 																							class="requis">*</span></label> <input type="text" id="cotation" name="cotation"
-																							value="${l.cotation}" size="20" maxlength="60" /> <input type="hidden"
+																							value="${l.cotation}" required pattern="[3-9][A-C]" /> <input type="hidden"
 																							name="idLongueur" id="idLongueur" value="${l.idLongueur}" /> <input
 																							type="hidden" name="type" id="type" value="modifierLongueur" />
 
@@ -434,7 +434,7 @@
 																					<input type="text" id="hauteur" name="hauteur" value="" required pattern="[0-9]{1,3}"/><br />
 																					<label for="cotation">cotation<span
 																						class="requis">*</span></label> <input type="text" id="cotation" name="cotation"
-																						value="" required pattern="[1-9][A-C]"/> <br /> <input type="hidden"
+																						value="" required pattern="[3-9][A-C]"/> <br /> <input type="hidden"
 																						name="idVoie" id="idVoie" value="${v.key.idVoie}" /><br /> <input
 																						type="hidden" name="type" id="type" value="longueur" /><br /> <br />
 

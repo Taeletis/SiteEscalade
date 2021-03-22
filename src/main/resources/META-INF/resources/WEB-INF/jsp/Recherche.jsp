@@ -79,7 +79,7 @@
 
 							<tr>
 								<th scope="row"><a class="btn btn-light" href="/site?id=${s.key.idSite}" role="button">${s.key.nom}
-								</a><a  href="/site?id=${s.key.idSite}" role="button"><img class=”card-img-top” src="${s.key.lienImage}"></a>
+								</a><a  href="/site?id=${s.key.idSite}" role="button"><img class="img-fluid" src="${s.key.lienImage}"></a>
 								<h3> ${s.key.mention ? '<i class="fa fa-trophy" style="color:gold"></i>' :'' }</h3></th>
 								
 
@@ -103,21 +103,7 @@
 
 
 
-	<div class="bg-light">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<ul class="list-inline text-center">
-						<li class="list-inline-item"><a href="#">About Us</a></li>
-						<li class="list-inline-item">&middot;</li>
-						<li class="list-inline-item"><a href="#">Privacy</a></li>
-						<li class="list-inline-item">&middot;</li>
-						<li class="list-inline-item"><a href="#">Terms of Use</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

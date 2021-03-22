@@ -29,6 +29,15 @@
 				<p>Statut : ${ g.membre ? 'admin' : 'membre' }</p>
 
 				<p>Email : ${g.email}</p>
+				
+				<form method="post" action="">
+					
+						
+						<input name="idGrimpeur" type="hidden" value="${g.idGrimpeur}">
+						<input type="submit" value="voir ses Sites" class="sansLabel" />
+
+				
+				</form>
 			</div>
 	</div>
 		
