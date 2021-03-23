@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>SiteEscalade</name>
 	<description>Demo project for Spring Boot</description>
-
+	<packaging>war</packaging>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -92,15 +92,17 @@
 		<dependency>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-lang3</artifactId>
-    <version>3.12.0</version>
-</dependency>
+    </dependency>
+
 		
 	</dependencies>
 	
 
 	<build>
+	<finalName>AmisDeLescalade</finalName>
 		<plugins>
 			<plugin>
+			
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
