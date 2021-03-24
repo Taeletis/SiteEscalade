@@ -109,13 +109,24 @@ public class TopoServlet extends HttpServlet {
 		 	Topo t=metierTopo.trouverMetierTopo(topoId);
 			Grimpeur g=metierGrimpeur.trouverMetierGrimpeur(grimpeurId);
 			StatutType s=metierStatutType.trouverMetierStatutType(statutId);
-			metierReservation.ajouterMetierReservation( g,  t,  s) ;
+			
+			List<Reservation> listetopo =metierReservation.listeParTopoMetierReservation (t);
+			boolean check=true;
+			Long idStatut=Long.valueOf(1);
+			for(Reservation r : listetopo) {
+				if (r.getEmprunteur().getIdGrimpeur()==g.getIdGrimpeur())
+					if(r.getStatut().getIdStatut()==idStatut)
+				check=false;
+			}
+			if (check) {
+				metierReservation.ajouterMetierReservation( g,  t,  s) ;
 			List<Reservation> listResa = new ArrayList<Reservation>();
 			listResa.addAll(metierReservation.listeParGrimpeurMetierReservation(g));
-
+			
 			int enAttente =(int) session.getAttribute("enAttente");
 			enAttente++;
 			session.setAttribute("enAttente", enAttente);
+			}
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
 			httpResponse.sendRedirect("/recherche");
 		}

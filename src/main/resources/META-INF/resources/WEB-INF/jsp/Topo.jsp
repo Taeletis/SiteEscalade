@@ -57,7 +57,7 @@
 				
 
 		<c:choose>
-			<c:when test="${t.disponible}">
+			<c:when test="${t.disponible && t.proprietaire.idGrimpeur!=grimpeur.idGrimpeur}">
 				<form method="post" action="">
 					
 						
